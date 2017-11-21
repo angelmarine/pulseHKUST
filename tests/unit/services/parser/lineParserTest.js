@@ -12,10 +12,10 @@ describe('inputParser', function() {
             IP_address: '10.89.82.199',
             MAC_id: '000af58da724',
             AP_id: 't602all07g',
-            AP_group: null,
+            AP_group: null
         };
 
-        const actual = inputParser(line);
+        const actual = inputParser.parseLine(line);
         actual.should.deep.equal(expected);
     });
 

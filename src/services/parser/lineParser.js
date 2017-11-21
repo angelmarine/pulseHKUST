@@ -4,7 +4,7 @@
 
 const R = require('ramda');
 
-const lineParser = (line) => {
+const parseLine = (line) => {
     const data = R.map(item => item.trim(), line.split(','));
 
     return {
@@ -15,4 +15,4 @@ const lineParser = (line) => {
     };
 };
 
-module.exports = lineParser;
+module.exports = {parseLine};
