@@ -15,7 +15,7 @@ describe('inputParser', function() {
             AP_group: null
         };
 
-        const actual = inputParser.parseLine(line);
+        const actual = inputParser(line);
         actual.should.deep.equal(expected);
     });
 
