@@ -9,7 +9,7 @@ const lineParser = (line) => {
     const match = line.match(linePattern);
 
     const handleInvalidLine = () => {
-        console.log(`Invalid input line: ${line}`);
+        console.log(`Invalid input line: "${line}"`);
         return null;
     };
 

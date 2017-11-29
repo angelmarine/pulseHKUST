@@ -26,4 +26,11 @@ describe('inputParser', function() {
         should.equal(actual, null);
     });
 
+    it('should return null on empty line', function() {
+        const line = "";
+
+        const actual = inputParser(line);
+        should.equal(actual, null);
+    });
+
 });
