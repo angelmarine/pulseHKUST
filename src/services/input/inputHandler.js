@@ -13,6 +13,7 @@ const make = (lineParser = require('lineParser'),
         const filenamePattern = new RegExp(/^filter_user_detail_(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})$/);
         const match = filename.match(filenamePattern);
         if (R.isNil(match)) {
+            console.log("[ERROR] Invalid filename");
             throw new Error("Invalid filename");
         }
 
@@ -32,7 +33,6 @@ const make = (lineParser = require('lineParser'),
         const dataObj = R.map(getLineObj, dataString);
 
         const nonEmptyDataObj = R.filter(obj => !R.isNil(obj), dataObj);
-        console.log(dataObj);
         return nonEmptyDataObj;
     }
 
@@ -42,13 +42,15 @@ const make = (lineParser = require('lineParser'),
 
         const fileNotExist = path => !fs.existsSync(path);
         if (fileNotExist(inputPath)) {
+            console.log("[ERROR] File not found");
             throw new Error("File not found");
         }
 
         const timestamp = getUTCTimestamp(filename);
         const data = readData(inputPath, timestamp);
 
-        return storeInputData(data);
+        return storeInputData(data)
+            .then(() => console.log("Processing input file completed successfully"));
     };
 
     return inputHandler;

@@ -42,7 +42,10 @@ describe('inputHandler', function() {
 
     it('should parse input line by line and add the correct timestamp', function() {
         const expectedTimestamp = new Date(2017, 11, 13, 16, 20);
+
+        // Program the response of external dependencies
         lineParser.returns(lineParserResponse);
+        storeInputData.returns(Promise.resolve());
 
         inputHandler(directory, filename);
         lineParser.calledTwice.should.equal(true);
