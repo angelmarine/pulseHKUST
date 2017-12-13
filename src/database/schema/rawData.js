@@ -12,6 +12,5 @@ var rawDataSchema = mongoose.Schema({
 // Set raw data model associated with raw data schema
 var rawDataModel = mongoose.model('rawData', rawDataSchema);
 
-
 //Export the raw data model
 module.exports = rawDataModel;
