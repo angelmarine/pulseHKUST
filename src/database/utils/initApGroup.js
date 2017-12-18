@@ -10,7 +10,6 @@ function initializeManual(){
          createAndSaveLocation(apId, 'Zone K');
     });
 
-
 }
 
 //read the AP_id and AP_group pairs from the file
