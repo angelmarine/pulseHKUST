@@ -1,28 +1,33 @@
 var mongoose = require('mongoose')
     , locationDataModel = require('../schema/locationData.js');
 
-//update the location data document with specified AP_id
-//add new timeCountPair to the Time_Count_Pair field array.
-function update(apId, timestamp, count){
+module.exports = {
 
-    //define query(condition)
-    var query = { AP_id: apId };
+    //FUNCTION: UPDATE
+    //update the location data document with specified AP_id
+    //add new timeCountPair to the Time_Count_Pair field array.
+    update: function (apId, timestamp, count) {
 
-    //define new movement to add to array
-    var newTimeCountPair = { Timestamp: timestamp, Count:count};
+        //define query(condition)
+        var query = {AP_id: apId};
 
-    //add new movement to the array
-    locationDataModel.findOneAndUpdate(query, {"$push": {Time_count_pair: newTimeCountPair}}, {safe:true, upsert:true}, function(err,model){
-        console.log(err);
-        console.log(model);
-    });
-}
+        //define new movement to add to array
+        var newTimeCountPair = {Timestamp: timestamp, Count: count};
 
-function deleteByApID(apId){
-    //define query(condition)
-    var query = {AP_id: apId};
-    locationDataModel.findOneAndRemove(query, function (err, foundDoc) {
-        console.log(err);
-        console.log(foundDoc);
-    });
-}
+        //add new movement to the array
+        return locationDataModel.findOneAndUpdate(query, {"$push": {Time_count_pair: newTimeCountPair}},{safe: true, upsert: true}).exec(function (err, model) {
+            console.log(err);
+            console.log(model);
+        });
+    },
+
+    //FUNCTION: DELETEBYAPID
+    deleteByApID: function (apId) {
+        //define query(condition)
+        var query = {AP_id: apId};
+        return locationDataModel.findOneAndRemove(query).exec(function (err, foundDoc) {
+            console.log(err);
+            console.log(foundDoc);
+        });
+    }
+};
