@@ -4,7 +4,9 @@
 
 const R = require('ramda');
 
-const make = (rawDataRepo, locationDataRepo, userDataRepo) => {
+const make = (rawDataRepo = require('../../database/utils/rawDataRepo'),
+              locationDataRepo = require('../../database/utils/locationDataRepo'),
+              userDataRepo = require('../../database/utils/userDataRepo')) => {
     const storeRawData = data => {
         return Promise.all(R.map(record => rawDataRepo.save(record), data))
     };

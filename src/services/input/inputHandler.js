@@ -5,9 +5,8 @@ const R = require('ramda');
 const readline = require('readline');
 const fs = require('fs');
 
-//TODO: update parameters
-const make = (lineParser = require('lineParser'),
-              storeInputData = require('storeInputData')) => {
+const make = (lineParser = require('./lineParser'),
+              storeInputData = require('./storeInputData')()) => {
 
     function getUTCTimestamp(filename) {
         const filenamePattern = new RegExp(/^filter_user_detail_(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})$/);
@@ -28,12 +27,13 @@ const make = (lineParser = require('lineParser'),
 
     function readData(inputPath, timestamp) {
         const dataString = fs.readFileSync(inputPath, 'utf-8').split('\n');
+        const nonEmptyDataString = R.filter(obj => (obj), dataString);
+        console.log(nonEmptyDataString);
 
         const getLineObj = lineString => R.assoc('Timestamp', timestamp, lineParser(lineString));
-        const dataObj = R.map(getLineObj, dataString);
+        const dataObj = R.map(getLineObj, nonEmptyDataString);
 
-        const nonEmptyDataObj = R.filter(obj => !R.isNil(obj), dataObj);
-        return nonEmptyDataObj;
+        return dataObj;
     }
 
     const inputHandler = (directory, filename) => {
@@ -49,8 +49,13 @@ const make = (lineParser = require('lineParser'),
         const timestamp = getUTCTimestamp(filename);
         const data = readData(inputPath, timestamp);
 
-        return storeInputData(data)
-            .then(() => console.log("Processing input file completed successfully"));
+        return storeInputData(data).then(() => {
+            console.log("Processing input file completed successfully");
+            fs.unlink(inputPath, (err) => {
+                if (err) throw err;
+                console.log(`Successfully deleted ${inputPath}`);
+            });
+        });
     };
 
     return inputHandler;
