@@ -15,10 +15,11 @@ module.exports = {
         var newTimeCountPair = {Timestamp: timestamp, Count: count};
 
         //add new movement to the array
-        return locationDataModel.findOneAndUpdate(query, {"$push": {Time_count_pair: newTimeCountPair}},{safe: true, upsert: true}).exec(function (err, model) {
-            console.log(err);
-            console.log(model);
-        });
+        // return locationDataModel.findOneAndUpdate(query, {"$push": {Time_count_pair: newTimeCountPair}},{safe: true, upsert: true}).exec(function (err, model) {
+        //     console.log(err);
+        //     console.log(model);
+        // });
+        return locationDataModel.findOneAndUpdate(query, {"$push": {Time_count_pair: newTimeCountPair}},{safe: true, upsert: true}).exec();
     },
 
     //FUNCTION: DELETEBYAPID

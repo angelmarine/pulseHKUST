@@ -14,10 +14,11 @@ module.exports = {
             Timestamp: jsonObj.Timestamp
         });
         //save raw data document
-        return newRawDataDoc.save(function (err, product, numAffected) {
-            if (err) return console.error();
-            else return console.log(product);
-        });
+        // return newRawDataDoc.save(function (err, product, numAffected) {
+        //     if (err) return console.error();
+        //     else return console.log(product);
+        // });
+        return newRawDataDoc.save();
    }
 
 };

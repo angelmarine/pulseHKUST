@@ -14,10 +14,11 @@ var mongoose = require('mongoose')
         var newMovement = { Timestamp: timestamp, AP_group: apGroup};
 
         //add new movement to the array
-        return userDataModel.findOneAndUpdate(query, {"$push": {Movement: newMovement}}, {safe:true, upsert:true}).exec(function(err,model){
-            console.log(err);
-            console.log(model);
-        });
+        // return userDataModel.findOneAndUpdate(query, {"$push": {Movement: newMovement}}, {safe:true, upsert:true}).exec(function(err,model){
+        //     console.log(err);
+        //     console.log(model);
+        // });
+        return userDataModel.findOneAndUpdate(query, {"$push": {Movement: newMovement}}, {safe:true, upsert:true}).exec();
 
     },
 
