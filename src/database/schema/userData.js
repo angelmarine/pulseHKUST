@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 // Set schema for user data
 var userDataSchema = mongoose.Schema({
-    MAC_id: String,
+    MAC_id: { type: [String], index: true },
     Movement: [{
         Timestamp: Date,
         AP_group: String}]
