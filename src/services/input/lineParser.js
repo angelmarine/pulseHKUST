@@ -4,7 +4,7 @@
 
 const R = require('ramda');
 
-const lineParser = (line) => {
+const lineParser = (line, timestamp) => {
     const linePattern = new RegExp(/(\S+), *(\S+), *(\S+), *(\S+),/);
     const match = line.match(linePattern);
 
@@ -18,7 +18,8 @@ const lineParser = (line) => {
             MAC_id: group[1],
             IP_address: group[2],
             AP_id: group[3],
-            AP_group: null
+            AP_group: null,
+            timestamp
         }
     };
 

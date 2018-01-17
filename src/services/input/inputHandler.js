@@ -23,12 +23,12 @@ const make = (lineParser = require('./lineParser'),
 
     function readData(inputPath, timestamp) {
         const dataString = fs.readFileSync(inputPath, 'utf-8').split('\n');
-        const nonEmptyDataString = R.filter(obj => (obj), dataString);
 
-        const getLineObj = lineString => R.assoc('Timestamp', timestamp, lineParser(lineString));
-        const dataObj = R.map(getLineObj, nonEmptyDataString);
+        const getLineObj = lineString => lineParser(lineString);
+        const dataObj = R.map(getLineObj, dataString);
 
-        return dataObj;
+        const nonEmptyDataObj = R.filter(obj => !R.isNil(obj), dataObj);
+        return nonEmptyDataObj;
     }
 
     const inputHandler = (directory, filename) => {
