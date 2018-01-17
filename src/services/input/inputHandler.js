@@ -11,10 +11,6 @@ const make = (lineParser = require('./lineParser'),
     function getUTCTimestamp(filename) {
         const filenamePattern = new RegExp(/^filter_user_detail_(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})$/);
         const match = filename.match(filenamePattern);
-        if (R.isNil(match)) {
-            console.log("[ERROR] Invalid filename");
-            throw new Error("Invalid filename");
-        }
 
         const year = match[1];
         const month = match[2];
@@ -28,7 +24,6 @@ const make = (lineParser = require('./lineParser'),
     function readData(inputPath, timestamp) {
         const dataString = fs.readFileSync(inputPath, 'utf-8').split('\n');
         const nonEmptyDataString = R.filter(obj => (obj), dataString);
-        console.log(nonEmptyDataString);
 
         const getLineObj = lineString => R.assoc('Timestamp', timestamp, lineParser(lineString));
         const dataObj = R.map(getLineObj, nonEmptyDataString);
@@ -40,22 +35,21 @@ const make = (lineParser = require('./lineParser'),
         const inputPath = directory + filename;
         console.log(`Processing input file: ${inputPath}`);
 
-        const fileNotExist = path => !fs.existsSync(path);
-        if (fileNotExist(inputPath)) {
-            console.log("[ERROR] File not found");
-            throw new Error("File not found");
-        }
-
         const timestamp = getUTCTimestamp(filename);
         const data = readData(inputPath, timestamp);
 
-        return storeInputData(data).then(() => {
-            console.log("Processing input file completed successfully");
-            fs.unlink(inputPath, (err) => {
-                if (err) throw err;
-                console.log(`Successfully deleted ${inputPath}`);
-            });
-        });
+        return storeInputData(data)
+            .then(() => {
+                console.log("Processing input file completed successfully");
+                fs.unlink(inputPath, (err) => {
+                    if (err) throw err;
+                    console.log(`Successfully deleted ${inputPath}`);
+                });
+            })
+            .catch(err => {
+                console.log(`Processing input file failed: ${err.message}`);
+                //TODO: send email notification on failure
+            })
     };
 
     return inputHandler;
