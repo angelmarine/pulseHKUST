@@ -4,6 +4,7 @@
 
 const R = require('ramda');
 const fs = require('fs');
+const logger = require('../utils/logger');
 const express = require('express');
 const multer  = require('multer');
 
@@ -26,7 +27,7 @@ router.post('/upload', function(req, res, next) {
     const upload = multer({ storage: storage }).single('data');
     upload(req, res, function(err) {
         if(err) {
-            console.log(`Uploading file failed: ${err.message}`);
+            logger.error(`Uploading file failed: ${err.message}`);
             res.end('File upload failed');
         }
         else {

@@ -4,6 +4,7 @@
 const R = require('ramda');
 const readline = require('readline');
 const fs = require('fs');
+const logger = require('../../utils/logger');
 
 const make = (lineParser = require('./lineParser'),
               storeInputData = require('./storeInputData')()) => {
@@ -33,21 +34,21 @@ const make = (lineParser = require('./lineParser'),
 
     const inputHandler = (directory, filename) => {
         const inputPath = directory + filename;
-        console.log(`Processing input file: ${inputPath}`);
+        logger.info(`Processing input file: ${inputPath}`);
 
         const timestamp = getUTCTimestamp(filename);
         const data = readData(inputPath, timestamp);
 
         return storeInputData(data)
             .then(() => {
-                console.log("Processing input file completed successfully");
+                logger.info("Processing input file completed successfully");
                 fs.unlink(inputPath, (err) => {
                     if (err) throw err;
-                    console.log(`Successfully deleted ${inputPath}`);
+                    logger.info(`Successfully deleted ${inputPath}`);
                 });
             })
             .catch(err => {
-                console.log(`Processing input file failed: ${err.message}`);
+                logger.error(`Processing input file failed: ${err.message}`);
                 //TODO: send email notification on failure
             })
     };

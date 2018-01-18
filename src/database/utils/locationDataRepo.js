@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
     , locationDataModel = require('../schema/locationData.js');
+const logger = require('../../utils/logger');
 
 module.exports = {
 
@@ -27,8 +28,8 @@ module.exports = {
         //define query(condition)
         var query = {AP_id: apId};
         return locationDataModel.findOneAndRemove(query).exec(function (err, foundDoc) {
-            console.log(err);
-            console.log(foundDoc);
+            logger.error(err);
+            logger.info(foundDoc);
         });
     }
 };

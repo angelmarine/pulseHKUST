@@ -1,5 +1,6 @@
-var mongoose = require('mongoose')
-    , locationDataModel = require('../schema/locationData.js');
+var mongoose = require('mongoose');
+var locationDataModel = require('../schema/locationData.js');
+var logger = require('../../utils/logger');
 
 //for testing purpose
 function initializeManual(){
@@ -28,6 +29,6 @@ function createAndSaveLocation(apID,apGroup){
     });
 
     newLocation.save(function(err){
-        if(err) return console.error();
+        if(err) return logger.error(err.message);
     });
 }

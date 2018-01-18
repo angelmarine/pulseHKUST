@@ -13,7 +13,6 @@ const make = (rawDataRepo = require('../../database/utils/rawDataRepo'),
 
     const storeLocationData = (data, timestamp) => {
         const getLocation = record => {
-            //console.log(record);
             return record.AP_id;
         };
 

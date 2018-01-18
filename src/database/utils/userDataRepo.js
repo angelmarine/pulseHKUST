@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
     , userDataModel = require('../schema/userData.js');
+const logger = require('../../utils/logger');
 
     module.exports = {
 
@@ -26,8 +27,8 @@ var mongoose = require('mongoose')
         //define query(condition)
         var query = {MAC_id: macId};
         return userDataModel.findOneAndRemove(query).exec(function (err, foundDoc) {
-            console.log(err);
-            console.log(foundDoc);
+            logger.error(err);
+            logger.info(foundDoc);
         });
     }
 

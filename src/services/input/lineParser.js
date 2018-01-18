@@ -3,13 +3,14 @@
  */
 
 const R = require('ramda');
+const logger = require('../../utils/logger');
 
 const lineParser = (line, timestamp) => {
     const linePattern = new RegExp(/(\S+), *(\S+), *(\S+), *(\S+),/);
     const match = line.match(linePattern);
 
     const handleInvalidLine = () => {
-        console.log(`Invalid input line: "${line}"`);
+        logger.warn(`Invalid input line: "${line}"`);
         return null;
     };
 
