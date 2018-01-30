@@ -4,7 +4,8 @@
 const winston = require('winston');
 const fs = require('fs');
 const env = process.env.NODE_ENV || 'development';
-const logDir = '../../log';
+// TODO: Use environment variable
+const logDir = './log';
 // Create the log directory if it does not exist
 if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
@@ -25,5 +26,4 @@ const logger = new (winston.Logger)({
         })
     ]
 });
-
 module.exports = logger;
