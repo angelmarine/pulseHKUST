@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // Set schema for location data
-var locationDataSchema = mongoose.Schema({
+var locationDataSchema = new mongoose.Schema({
     AP_id: { type: [String], index: true },
     AP_group: String,
     Time_count_pair:[{

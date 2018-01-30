@@ -29,7 +29,8 @@ const make = (lineParser = require('./lineParser'),
         const dataObj = R.map(getLineObj, dataString);
 
         const nonEmptyDataObj = R.filter(obj => !R.isNil(obj), dataObj);
-        return nonEmptyDataObj;
+
+        return R.map(R.assoc('Timestamp', timestamp), nonEmptyDataObj) ;
     }
 
     const inputHandler = (directory, filename) => {
@@ -48,7 +49,7 @@ const make = (lineParser = require('./lineParser'),
                 });
             })
             .catch(err => {
-                logger.error(`Processing input file failed: ${err.message}`);
+                logger.error(`Processing input file failed: ${err.message} \n ${err.stack}`);
                 //TODO: send email notification on failure
             })
     };

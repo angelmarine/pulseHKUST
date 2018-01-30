@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // Set schema for raw data
-var rawDataSchema = mongoose.Schema({
+var rawDataSchema = new mongoose.Schema({
     IP_address: String,
     MAC_id: String,
     AP_id: String,

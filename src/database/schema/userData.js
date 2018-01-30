@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // Set schema for user data
-var userDataSchema = mongoose.Schema({
+var userDataSchema = new mongoose.Schema({
     MAC_id: { type: [String], index: true },
     Movement: [{
         Timestamp: Date,
