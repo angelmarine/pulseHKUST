@@ -6,13 +6,13 @@ const logger = require('../../utils/logger');
 
     // update the user data document with specified MAC_id
     // add 'timestamp' and 'AP_id' value to the 'Movement' field array
-    update : function (macId, timestamp, apGroup){
+    update : function (macId, timestamp, apId){
 
         //define query(condition)
         var query = { MAC_id: macId };
 
         //define new movement to add to array
-        var newMovement = { Timestamp: timestamp, AP_group: apGroup};
+        var newMovement = { Timestamp: timestamp, AP_id: apId};
 
         //add new movement to the array
         // return userDataModel.findOneAndUpdate(query, {"$push": {Movement: newMovement}}, {safe:true, upsert:true}).exec(function(err,model){

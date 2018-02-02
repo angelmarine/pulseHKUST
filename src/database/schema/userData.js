@@ -5,7 +5,7 @@ var userDataSchema = new mongoose.Schema({
     MAC_id: { type: [String], index: true },
     Movement: [{
         Timestamp: Date,
-        AP_group: String}]
+        AP_id: String}]
 });
 
 // Set user data model associated with user data schema
