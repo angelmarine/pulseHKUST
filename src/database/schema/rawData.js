@@ -1,8 +1,7 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // Set schema for raw data
-var rawDataSchema = new mongoose.Schema({
-    IP_address: String,
+const rawDataSchema = new mongoose.Schema({
     MAC_id: String,
     AP_id: String,
     AP_group: String,
@@ -10,7 +9,7 @@ var rawDataSchema = new mongoose.Schema({
 });
 
 // Set raw data model associated with raw data schema
-var rawDataModel = mongoose.model('rawData', rawDataSchema);
+const rawDataModel = mongoose.model('rawData', rawDataSchema);
 
 //Export the raw data model
 module.exports = rawDataModel;

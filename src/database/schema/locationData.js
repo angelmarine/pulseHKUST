@@ -1,42 +1,53 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+
+const minuteObj = new mongoose.Schema({
+    0: {type:Number, default:0},
+    10: {type:Number, default:0},
+    20: {type:Number, default:0},
+    30: {type:Number, default:0},
+    40: {type:Number, default:0},
+    50: {type:Number, default:0}
+});
+
+const hourMinuteObj = new mongoose.Schema({
+    0: {type:minuteObj, default:minuteObj},
+    1: {type:minuteObj, default:minuteObj},
+    2: {type:minuteObj, default:minuteObj},
+    3: {type:minuteObj, default:minuteObj},
+    4: {type:minuteObj, default:minuteObj},
+    5: {type:minuteObj, default:minuteObj},
+    6: {type:minuteObj, default:minuteObj},
+    7: {type:minuteObj, default:minuteObj},
+    8: {type:minuteObj, default:minuteObj},
+    10: {type:minuteObj, default:minuteObj},
+    11: {type:minuteObj, default:minuteObj},
+    12: {type:minuteObj, default:minuteObj},
+    13: {type:minuteObj, default:minuteObj},
+    14: {type:minuteObj, default:minuteObj},
+    15: {type:minuteObj, default:minuteObj},
+    16: {type:minuteObj, default:minuteObj},
+    17: {type:minuteObj, default:minuteObj},
+    18: {type:minuteObj, default:minuteObj},
+    19: {type:minuteObj, default:minuteObj},
+    20: {type:minuteObj, default:minuteObj},
+    21: {type:minuteObj, default:minuteObj},
+    22: {type:minuteObj, default:minuteObj},
+    23: {type:minuteObj, default:minuteObj}
+});
 
 // Set schema for location data
-var locationDataSchema = new mongoose.Schema({
-    AP_id: { type: [String], index: true },
+const locationDataSchema = new mongoose.Schema({
+    AP_id: { type: String, index: true },
     AP_group: String,
-    Timestamp:[{
+    Count_timestamp:[{
         //each timestamp will contain data size of a day
-        day: Date,
-        count: {
-            0: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            1: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            2: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            3: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            4: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            5: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            6: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            7: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            8: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            10: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            11: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            12: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            13: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            14: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            15: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            16: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            17: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            18: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            19: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            20: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            21: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            22: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0},
-            23: {0: 0, 5: 0, 10: 0, 15: 0, 20: 0, 25: 0, 30: 0, 35: 0, 40: 0, 45: 0, 50: 0, 55: 0}
-        }
+        Day: Date,
+        Hour_minute_count: {type: hourMinuteObj, default:hourMinuteObj}
     }]
 });
 
 // Set location data model associated with location data schema
-var locationDataModel = mongoose.model('locationData', locationDataSchema);
+const locationDataModel = mongoose.model('locationData', locationDataSchema);
 
 // Export location model
 module.exports = locationDataModel;
