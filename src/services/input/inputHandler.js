@@ -5,21 +5,16 @@ const R = require('ramda');
 const readline = require('readline');
 const fs = require('fs');
 const logger = require('../../utils/logger');
+const moment = require('moment');
 
 const make = (lineParser = require('./lineParser'),
               storeInputData = require('./storeInputData')()) => {
 
     function getUTCTimestamp(filename) {
-        const filenamePattern = new RegExp(/^filter_user_detail_(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})$/);
-        const match = filename.match(filenamePattern);
+        const prefix = 'filter_user_detail_';
+        const dateString = filename.slice(prefix.length - 1);
 
-        const year = match[1];
-        const month = match[2];
-        const day = match[3];
-        const hour = match[4];
-        const minute = match[5];
-
-        return new Date(year, month, day, hour, minute);
+        return moment(dateString, "YYYYMMDD_HHmm").toDate();
     }
 
     function readData(inputPath, timestamp) {
@@ -38,6 +33,7 @@ const make = (lineParser = require('./lineParser'),
         logger.info(`Processing input file: ${inputPath}`);
 
         const timestamp = getUTCTimestamp(filename);
+        console.log(timestamp);
         const data = readData(inputPath, timestamp);
 
         return storeInputData(data)
