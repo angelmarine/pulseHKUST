@@ -14,9 +14,15 @@ module.exports = {
         return newRawDataDoc.save()
             .then((savedDoc) =>{
                 logger.info("Saved raw data: " + savedDoc);
+                return new Promise(function(resolve, reject) {
+                    resolve();
+                });
             })
             .catch((err) =>{
                 logger.error(err);
+                return new Promise(function(resolve, reject) {
+                    reject();
+                });
             });
    }
 };

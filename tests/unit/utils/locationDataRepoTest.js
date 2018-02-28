@@ -21,8 +21,7 @@ describe('update',function(){
             expect(expectPromise.resolve()).to.be.a('object');
     });
 
-
-    it('should return rejected promise when invalid day with string input',function(){
+   it('should return rejected promise when invalid day with string input',function(){
         //test if promise is returned
         const expectPromise = locationDataRepo.update(apId, day, invalidHour, minute, count);
             expect(expectPromise.then).to.be.a('function');
