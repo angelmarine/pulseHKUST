@@ -6,7 +6,7 @@ const R = require('ramda');
 const logger = require('../../utils/logger');
 const assignApGroup = require('./apGroupHandler');
 
-const lineParser = (line, timestamp) => {
+const lineParser = (line) => {
     const linePattern = new RegExp(/(\S+), *(\S+), *(\S+), *(\S+),/);
     const match = line.match(linePattern);
 
@@ -23,8 +23,7 @@ const lineParser = (line, timestamp) => {
         return {
             MAC_id: group[1],
             AP_id,
-            AP_group,
-            timestamp
+            AP_group
         }
     };
 
