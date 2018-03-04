@@ -10,11 +10,11 @@ const moment = require('moment');
 const make = (lineParser = require('./lineParser'),
               storeInputData = require('./storeInputData')()) => {
 
-    function getUTCTimestamp(filename) {
+    function getTimestamp(filename) {
         const prefix = 'filter_user_detail_';
         const dateString = filename.slice(prefix.length - 1);
 
-        return moment(dateString, "YYYYMMDD_HHmm").toDate();
+        return moment(dateString, "YYYYMMDD_HHmm");
     }
 
     function readData(inputPath, timestamp) {
@@ -32,8 +32,7 @@ const make = (lineParser = require('./lineParser'),
         const inputPath = directory + filename;
         logger.info(`Processing input file: ${inputPath}`);
 
-        const timestamp = getUTCTimestamp(filename);
-        console.log(timestamp);
+        const timestamp = getTimestamp(filename);
         const data = readData(inputPath, timestamp);
 
         return storeInputData(data)

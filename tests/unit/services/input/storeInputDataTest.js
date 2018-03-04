@@ -2,21 +2,10 @@
  * Created by felyciagunawan on 29/11/2017.
  */
 
-
-// [ { MAC_id: '000af58da724',
-//     IP_address: '10.89.82.199',
-//     AP_id: 't602all07g',
-//     AP_group: null,
-//     Timestamp: 2017-12-13T08:20:00.000Z },
-// { MAC_id: '000af58da724',
-//     IP_address: '10.89.82.199',
-//     AP_id: 't602all07g',
-//     AP_group: null,
-//     Timestamp: 2017-12-13T08:20:00.000Z } ]
-
 const should = require('chai').should();
 const sinon = require('sinon');
 const R = require('ramda');
+const moment = require('moment');
 
 describe('storeInputData', function() {
     const rawDataRepo = {
@@ -27,28 +16,27 @@ describe('storeInputData', function() {
         update: sinon.stub().returns(Promise.resolve())
     };
 
-    const userDataRepo = {
-        update: sinon.stub().returns(Promise.resolve())
-    };
+    const storeInputData = require('../../../../src/services/input/storeInputData')(rawDataRepo, locationDataRepo);
 
-    const storeInputData = require('../../../../src/services/input/storeInputData')(rawDataRepo, locationDataRepo, userDataRepo);
-
-    const createInputObj = (MAC_id, IP_address, AP_id, AP_group, Timestamp) => {
+    const createInputObj = (MAC_id, AP_id, AP_group, Timestamp) => {
         return {
             MAC_id,
-            IP_address,
             AP_id,
             AP_group,
             Timestamp
         };
     };
 
-    const testDate = new Date('2017-12-13T08:20:00.000Z');
+    const testDate = moment([2017, 10, 13, 16, 20]);
+    // const testDate = new Date('2017-12-13T08:20:00.000Z');
+    const expectedDate = moment([2017, 10, 13, 0, 0]);
+    const expectedHour = 16;
+    const expectedMinute = 20;
     // Prepare data
     let data = [];
-    data.push(createInputObj('000af58da724', '10.89.82.199', 't602all07g', null, testDate));
-    data.push(createInputObj('000af5bfb060', '10.89.168.145', 't602all07g', null, testDate));
-    data.push(createInputObj('000af5bfb062', '10.89.168.146', 'xxxxxxxx', null, testDate));
+    data.push(createInputObj('000af58da724', 't524ctlg701', 'ctlg7', testDate));
+    data.push(createInputObj('000af5bfb060', 't524ctlg701', 'ctlg7', testDate));
+    data.push(createInputObj('000af5bfb062', 't602ug9g2', 'ug9', testDate));
 
     storeInputData(data);
 
@@ -59,30 +47,29 @@ describe('storeInputData', function() {
         callArgs.should.deep.equal(data);
     });
 
-    it('should store aggregated count per location into locationDataRepo', function() {
+    it('should store aggregated count by apId and by apGroup into locationDataRepo', function() {
         const expected = [
-            ['t602all07g', testDate, 2],
-            ['xxxxxxxx', testDate, 1]
+            ['t524ctlg701', 'ctlg7', expectedDate, expectedHour, expectedMinute, 2],
+            ['ctlg7', 'ctlg7', expectedDate, expectedHour, expectedMinute, 2],
+            ['t602ug9g2', 'ug9', expectedDate, expectedHour, expectedMinute, 1],
+            ['ug9', 'ug9', expectedDate, expectedHour, expectedMinute, 1]
         ];
 
-        locationDataRepo.update.callCount.should.equal(2);
+        locationDataRepo.update.callCount.should.equal(expected.length);
 
         const callArgs = locationDataRepo.update.args;
-        callArgs.should.deep.equal(expected);
+        const deepAssertion = (actual, expected) => {
+          actual[0].should.equal(expected[0]);
+          actual[1].should.equal(expected[1]);
+          actual[2].isSame(expected[2]).should.equal(true);
+          actual[3].should.equal(expected[3]);
+          actual[4].should.equal(expected[4]);
+          actual[5].should.equal(expected[5]);
+        };
+        for (let i in R.range(0, expected.length)) {
+            deepAssertion(callArgs[i], expected[i]);
+        }
     });
 
-    it('should store user location record into userDataRepo', function() {
-        //TODO:check if multiple records of a user can appear in one input datafile
-        const expected = [
-            ['000af58da724', testDate, 't602all07g'],
-            ['000af5bfb060', testDate, 't602all07g'],
-            ['000af5bfb062', testDate, 'xxxxxxxx']
-        ];
-
-        userDataRepo.update.callCount.should.equal(data.length);
-
-        const callArgs = userDataRepo.update.args;
-        callArgs.should.deep.equal(expected);
-    });
 
 });

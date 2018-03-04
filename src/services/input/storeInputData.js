@@ -3,34 +3,43 @@
  */
 
 const R = require('ramda');
+const moment = require('moment');
 
 const make = (rawDataRepo = require('../../database/utils/rawDataRepo'),
-              locationDataRepo = require('../../database/utils/locationDataRepo'),
-              userDataRepo = require('../../database/utils/userDataRepo')) => {
+              locationDataRepo = require('../../database/utils/locationDataRepo')) => {
     const storeRawData = data => {
         return Promise.all(R.map(record => rawDataRepo.save(record), data))
     };
 
     const storeLocationData = (data, timestamp) => {
-        const getLocation = record => {
-            return record.AP_id;
+        const getCountByLocationPairs = list => {
+            const countByLocation = {};
+
+            const countRecord = rec => {
+                countByLocation[rec.AP_id] = countByLocation[rec.AP_id] || {'group': rec.AP_group, 'count': 0};
+                countByLocation[rec.AP_id]['count'] = countByLocation[rec.AP_id]['count'] + 1;
+
+                countByLocation[rec.AP_group] = countByLocation[rec.AP_group] || {'group': rec.AP_group, 'count': 0};
+                countByLocation[rec.AP_group]['count'] = countByLocation[rec.AP_group]['count'] + 1;
+            };
+
+            R.map(countRecord, list);
+            return R.toPairs(countByLocation);
         };
 
-        const countByLocation = R.map(R.length, R.groupBy(getLocation, data));
-        // groupBy returns an object, thus need to convert to list for promise all
-        // Format of list: [[apId1, count1], [apId2, count2],...]
-        const countByLocationList = R.toPairs(countByLocation);
+        const storeCountByLocation = countByLocPairs => {
+            const date = timestamp.clone().startOf('day');
+            const hour = timestamp.hour();
+            const minute = timestamp.minute();
 
-        const getArgsAndStore = sublist => {
-            return locationDataRepo.update(sublist[0], timestamp, sublist[1]);
+            const storeRecord = pair => {
+                return locationDataRepo.update(pair[0], pair[1].group, date, hour, minute, pair[1].count);
+            };
+            return Promise.all(R.map(storeRecord, countByLocPairs))
         };
 
-        return Promise.all(R.map(getArgsAndStore, countByLocationList))
-    };
-
-    const storeUserData = (data, timestamp) => {
-        const getArgsAndStore = record => userDataRepo.update(record.MAC_id, timestamp, record.AP_id);
-        return Promise.all(R.map(getArgsAndStore, data))
+        const getCountAndStore = R.pipe(getCountByLocationPairs, storeCountByLocation);
+        return getCountAndStore(data);
     };
 
     const storeInputData = (data) => {
@@ -38,7 +47,7 @@ const make = (rawDataRepo = require('../../database/utils/rawDataRepo'),
             return Promise.resolve();
         const timestamp = data[0].Timestamp;
 
-        return Promise.all([storeRawData(data), storeLocationData(data, timestamp), storeUserData(data, timestamp)])
+        return Promise.all([storeRawData(data), storeLocationData(data, timestamp)]);
     };
 
     return storeInputData;

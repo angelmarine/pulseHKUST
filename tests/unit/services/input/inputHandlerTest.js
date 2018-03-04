@@ -40,9 +40,9 @@ describe('inputHandler', function() {
 
     it('should add the correct timestamp', function() {
         // Javascript date represents months as [0-11]
-        const expectedTimestamp = new Date(2017, 10, 13, 16, 20);
-        const argsTimestamp = (((storeInputData.args[0])[0])[0]).Timestamp.getTime();
-        argsTimestamp.should.equal(expectedTimestamp.getTime());
+        const expectedTimestamp = moment([2017, 10, 13, 16, 20]);
+        const argsTimestamp = (((storeInputData.args[0])[0])[0]).Timestamp;
+        expectedTimestamp.isSame(argsTimestamp).should.equal(true);
     });
 
     it('should delete the input file', function() {
