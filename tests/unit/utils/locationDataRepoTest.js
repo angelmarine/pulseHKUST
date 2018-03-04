@@ -1,6 +1,8 @@
 const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
 const expect = chai.expect;
-const assert = require('assert');
+const assert = chai.assert;
 
 describe('update',function(){
 
@@ -16,15 +18,15 @@ describe('update',function(){
 
     it('should return resolved promise when valid input',function(){
         //test if promise is returned
-        const expectPromise = locationDataRepo.update(apId, day, hour, minute, count);
-            expect(expectPromise.then).to.be.a('function');
-            expect(expectPromise.resolve()).to.be.a('object');
+        const expectResolve = locationDataRepo.update(apId, day, hour, minute, count);
+        return assert.isFulfilled(expectResolve);
     });
 
    it('should return rejected promise when invalid day with string input',function(){
         //test if promise is returned
-        const expectPromise = locationDataRepo.update(apId, day, invalidHour, minute, count);
-            expect(expectPromise.then).to.be.a('function');
-            expect(expectPromise.resolve()).to.be.a('object');
+        const expectReject = locationDataRepo.update(apId, day, invalidHour, minute, count);
+        return assert.isRejected(expectReject);
+        //expect(expectPromise.then).to.be.a('function');
+        //expect(expectPromise.resolve()).to.be.a('object');
     });
 });

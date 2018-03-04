@@ -1,5 +1,5 @@
-ORIGFOLDER=dev/fyp/data_file_new/*
-DESTFOLDER=dev/fyp/data_file_uploaded/
+ORIGFOLDER=C:\Users\Bon\Desktop\bulkUploadTest\data_file_new*
+DESTFOLDER=C:\Users\Bon\Desktop\bulkUploadTest\data_file_uploaded\
 for f in $ORIGFOLDER
 do
 	DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")

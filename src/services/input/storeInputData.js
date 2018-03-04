@@ -8,7 +8,8 @@ const moment = require('moment');
 const make = (rawDataRepo = require('../../database/utils/rawDataRepo'),
               locationDataRepo = require('../../database/utils/locationDataRepo')) => {
     const storeRawData = data => {
-        return Promise.all(R.map(record => rawDataRepo.save(record), data))
+        return Promise.all(rawDataRepo.save(data));
+        // return Promise.all(R.map(record => rawDataRepo.save(record), data));
     };
 
     const storeLocationData = (data, timestamp) => {
@@ -35,7 +36,7 @@ const make = (rawDataRepo = require('../../database/utils/rawDataRepo'),
             const storeRecord = pair => {
                 return locationDataRepo.update(pair[0], pair[1].group, date, hour, minute, pair[1].count);
             };
-            return Promise.all(R.map(storeRecord, countByLocPairs))
+            return Promise.all(R.map(storeRecord, countByLocPairs));
         };
 
         const getCountAndStore = R.pipe(getCountByLocationPairs, storeCountByLocation);

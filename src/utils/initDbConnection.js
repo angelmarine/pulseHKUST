@@ -1,17 +1,17 @@
-var mongoose = require('mongoose');
-var logger = require('./logger');
+const mongoose = require('mongoose');
+const logger = require('./logger');
 
-var option = {
+const option = {
     useMongoClient: true
 };
 
 // Set connection URL
-var url = 'mongodb://127.0.0.1:27017/pulse-test';
+const url = 'mongodb://127.0.0.1:27017/pulse-test';
 
 // Connect to the database
 mongoose.connect(url, option);
 mongoose.Promise = global.Promise;
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', err => logger.error(`DB connection error: ${err.message}`));
 db.once('open', function(){
     logger.info("DB connection initialized successfully!");
