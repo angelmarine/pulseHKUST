@@ -44,24 +44,23 @@ module.exports = {
         2. Second query just update the Count_timestamp element with matching ap_id
            and date with new 'Hour_minute_count' value
         */
-        return locationDataModel.findOneAndUpdate(queryNewLocation,{},optionsNewLocation)
-            .then(function(){
+        return locationDataModel.findOneAndUpdate(queryNewLocation, {}, optionsNewLocation)
+            .then(() => {
                 return locationDataModel.update(queryNoMatchingDate, {$addToSet: addToSet})
                     .then(() => {
                         return locationDataModel.update(queryMatchingDate, updateHourMinuteCount, {arrayFilters: [arrayFilter]})
-                            .then(() => {
-                                return Promise.resolve();
-                            })
-                            .catch((err) => {
+                            .catch((err) => { //catch error when updating hour minute count
                                 logger.error(err);
-                                return Promise.reject("Error in update");
-                            });
+                            })
                     })
-                    .catch((err) => {
+                    .catch((err) => { //catch error when adding new date
                         logger.error(err);
-                        return Promise.reject("Error in update");
                     });
-        });
+            })
+            .catch((error) => { // catch error when adding new location
+                logger.error(err);
+            });
+
         /*
         //check whether it is a new location
         isNewLocation(apId,apGroup).then(() => {
@@ -80,32 +79,25 @@ module.exports = {
         });*/
     },
 
-    deleteByAPId: function(apId){
+    deleteByAPId: function (apId) {
         const query = {
             AP_id: apId
         };
-        return locationDataModel.findOneAndRemove(query);
-        /*
         return locationDataModel.findOneAndRemove(query)
-            .then((foundDoc) => {
-                logger.info("Deleted location data: " + foundDoc);
-                return resolvedPromise();
-            })
             .catch((err) => {
-                logger.error(err);
-                return rejectedPromise();
-            });*/
+                console.log(err);
+            });
     }
 };
 
-// helper functions
+/*// helper functions
 function isNewLocation(apId,apGroup){
     const queryLocationExists = {
         AP_id: apId,
         AP_group: apGroup,
     };
-    return locationDataModel.find(queryLocationExists);
-    /*
+    return locationDataModel.find(queryLocationExists).exec();
+    /!*
     return locationDataModel.find(queryLocationExists)
         .then((locationFound) => {
             if(!locationFound){
@@ -117,5 +109,5 @@ function isNewLocation(apId,apGroup){
             logger.error(err);
             return rejectedPromise();
         });
-    */
-}
+    *!/
+}*/
