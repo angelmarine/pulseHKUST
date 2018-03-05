@@ -49,18 +49,8 @@ module.exports = {
                 return locationDataModel.update(queryNoMatchingDate, {$addToSet: addToSet})
                     .then(() => {
                         return locationDataModel.update(queryMatchingDate, updateHourMinuteCount, {arrayFilters: [arrayFilter]})
-                            .catch((err) => { //catch error when updating hour minute count
-                                logger.error(err);
-                            })
-                    })
-                    .catch((err) => { //catch error when adding new date
-                        logger.error(err);
                     });
-            })
-            .catch((error) => { // catch error when adding new location
-                logger.error(err);
             });
-
         /*
         //check whether it is a new location
         isNewLocation(apId,apGroup).then(() => {
