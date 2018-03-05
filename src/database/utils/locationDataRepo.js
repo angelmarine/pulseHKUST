@@ -73,10 +73,7 @@ module.exports = {
         const query = {
             AP_id: apId
         };
-        return locationDataModel.findOneAndRemove(query)
-            .catch((err) => {
-                console.log(err);
-            });
+        return locationDataModel.findOneAndRemove(query).exec();
     }
 };
 

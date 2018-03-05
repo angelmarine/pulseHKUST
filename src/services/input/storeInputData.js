@@ -8,8 +8,8 @@ const moment = require('moment');
 const make = (rawDataRepo = require('../../database/utils/rawDataRepo'),
               locationDataRepo = require('../../database/utils/locationDataRepo')) => {
     const storeRawData = data => {
-        return Promise.all(rawDataRepo.save(data));
-        // return Promise.all(R.map(record => rawDataRepo.save(record), data));
+        //return Promise.all(rawDataRepo.save(data));
+        return Promise.all(R.map(record => rawDataRepo.save(record), data));
     };
 
     const storeLocationData = (data, timestamp) => {
