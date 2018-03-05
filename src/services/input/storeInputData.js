@@ -29,7 +29,7 @@ const make = (rawDataRepo = require('../../database/utils/rawDataRepo'),
         };
 
         const storeCountByLocation = countByLocPairs => {
-            const date = timestamp.clone().startOf('day');
+            const date = timestamp.clone().startOf('day').toDate();
             const hour = timestamp.hour();
             const minute = timestamp.minute();
 
