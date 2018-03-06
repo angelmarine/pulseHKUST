@@ -2,7 +2,7 @@ const rawDataModel = require('../schema/rawData.js');
 const logger = require('../../utils/logger');
 
 module.exports = {
-    save: function (rawDataArray) {
+    save: function (rawData) {
         const rawDataDoc = new rawDataModel({
             MAC_id: rawData.MAC_id,
             AP_id: rawData.AP_id,

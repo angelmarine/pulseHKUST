@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const logger = require('./logger');
 
 const option = {
-    useMongoClient: true
+    //useMongoClient: true
 };
 
 // Set connection URL
