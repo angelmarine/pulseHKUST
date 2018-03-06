@@ -1,4 +1,5 @@
-const rawDataModel = require('../schema/rawData.js');
+const rawDataModel = require('../schema/rawData.js'),
+    R = require('ramda');
 const logger = require('../../utils/logger');
 
 module.exports = {
@@ -10,34 +11,29 @@ module.exports = {
             Timestamp: rawData.Timestamp
         });
         return rawDataDoc.save();
-
-
-        /*const completed = [];
-
+        /*
         rawDataArray.forEach((rawData) => {
-            const rawDataDoc = new rawDataModel({
-                MAC_id: rawData.MAC_id,
-                AP_id: rawData.AP_id,
-                AP_group: rawData.AP_group,
-                Timestamp: rawData.Timestamp
-            });
-            rawDataDoc.save()
-                .then(() => {
-                    completed.push(rawData.MAC_id);
-                })
-                .catch((err) => {
-                    logger.error(err);
-                    rollback(completed);
-                });
+           bulkUpdateArray.push(transformToUpdateOne(rawData));
         });
+        const transformToUpdateOne = (data) => {
+            return {
+                updateOne: {
+                    filter: {
+                        MAC_id: data.MAC_id,
+                        Timestamp: data.Timestamp
+                    },
+                    update: {
+                        AP_id: data.AP_id,
+                        AP_group: data.AP_group
+                    },
+                    upsert: true
+                }
+            }
+        };
 
-        //
-        return Promise.all();*/
+        const bulkUpdateArray = R.map(transformToUpdateOne, rawDataArray);
+
+        return rawDataModel.bulkWrite(bulkUpdateArray);
+        */
     }
 };
-
-function rollback(completed){
-    completed.forEach((doc) => {
-        rawDataModel.findOneAndRemove({MAC_id});
-    });
-}

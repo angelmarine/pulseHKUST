@@ -44,29 +44,13 @@ module.exports = {
         2. Second query just update the Count_timestamp element with matching ap_id
            and date with new 'Hour_minute_count' value
         */
-        return locationDataModel.findOneAndUpdate(queryNewLocation, {}, optionsNewLocation)
+        return locationDataModel.findOneAndUpdate(queryNewLocation,{}, optionsNewLocation)
             .then(() => {
                 return locationDataModel.update(queryNoMatchingDate, {$addToSet: addToSet})
                     .then(() => {
                         return locationDataModel.update(queryMatchingDate, updateHourMinuteCount, {arrayFilters: [arrayFilter]})
                     });
             });
-        /*
-        //check whether it is a new location
-        isNewLocation(apId,apGroup).then(() => {
-            const newLocation = new locationDataModel({
-                AP_id: apId,
-                AP_group: apGroup,
-                Count_timestamp: undefined
-            });
-            newLocation.save()
-                .then((savedDoc) => {
-                    logger.info("New location added: " + savedDoc);
-                })
-                .catch((err) => {
-                    logger.error(err.message);
-                });
-        });*/
     },
 
     deleteByAPId: function (apId) {
@@ -76,25 +60,3 @@ module.exports = {
         return locationDataModel.findOneAndRemove(query).exec();
     }
 };
-
-/*// helper functions
-function isNewLocation(apId,apGroup){
-    const queryLocationExists = {
-        AP_id: apId,
-        AP_group: apGroup,
-    };
-    return locationDataModel.find(queryLocationExists).exec();
-    /!*
-    return locationDataModel.find(queryLocationExists)
-        .then((locationFound) => {
-            if(!locationFound){
-                return resolvedPromise();
-            }
-            return rejectedPromise();
-        })
-        .catch((err) => {
-            logger.error(err);
-            return rejectedPromise();
-        });
-    *!/
-}*/
