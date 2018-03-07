@@ -1,5 +1,7 @@
-ORIGFOLDER=C:\Users\Bon\Desktop\bulkUploadTest\data_file_new*
-DESTFOLDER=C:\Users\Bon\Desktop\bulkUploadTest\data_file_uploaded\
+#!/bin/bash
+
+ORIGFOLDER="C:\\Users\\Bon\\Desktop\\bulkUploadTest\\data_file_new"
+DESTFOLDER="C:\\Users\\Bon\\Desktop\\bulkUploadTest\\data_file_uploaded"
 for f in $ORIGFOLDER
 do
 	DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")

@@ -3,18 +3,7 @@ const rawDataModel = require('../schema/rawData.js'),
 const logger = require('../../utils/logger');
 
 module.exports = {
-    save: function (rawData) {
-        const rawDataDoc = new rawDataModel({
-            MAC_id: rawData.MAC_id,
-            AP_id: rawData.AP_id,
-            AP_group: rawData.AP_group,
-            Timestamp: rawData.Timestamp
-        });
-        return rawDataDoc.save();
-        /*
-        rawDataArray.forEach((rawData) => {
-           bulkUpdateArray.push(transformToUpdateOne(rawData));
-        });
+    save: function (rawDataArray) {
         const transformToUpdateOne = (data) => {
             return {
                 updateOne: {
@@ -30,10 +19,7 @@ module.exports = {
                 }
             }
         };
-
         const bulkUpdateArray = R.map(transformToUpdateOne, rawDataArray);
-
         return rawDataModel.bulkWrite(bulkUpdateArray);
-        */
     }
 };
