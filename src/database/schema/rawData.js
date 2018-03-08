@@ -8,6 +8,8 @@ const rawDataSchema = new mongoose.Schema({
     Timestamp: Date
 });
 
+rawDataSchema.index(({ MAC_id: 1, Timestamp: 1}));
+
 // Set raw data model associated with raw data schema
 const rawDataModel = mongoose.model('rawData', rawDataSchema);
 
