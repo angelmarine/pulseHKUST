@@ -6,40 +6,38 @@ const R = require('ramda');
 const moment = require('moment');
 
 const make = (rawDataRepo = require('../../database/utils/rawDataRepo'),
-              locationDataRepo = require('../../database/utils/locationDataRepo')) => {
+              locationDataRepo = require('../../database/utils/locationDataRepo')()) => {
     const storeRawData = data => {
         return Promise.all([rawDataRepo.save(data)]);
         //return Promise.all(R.map(record => rawDataRepo.save(record), data));
     };
 
     const storeLocationData = (data, timestamp) => {
-        const getCountByLocationPairs = list => {
+        const getCountByLocation = list => {
             const countByLocation = {};
 
             const countRecord = rec => {
-                countByLocation[rec.AP_id] = countByLocation[rec.AP_id] || {'group': rec.AP_group, 'count': 0};
+                // Initialize the record for AP_id if not exist
+                countByLocation[rec.AP_id] = countByLocation[rec.AP_id] || {'id': rec.AP_id,'group': rec.AP_group, 'count': 0};
                 countByLocation[rec.AP_id]['count'] = countByLocation[rec.AP_id]['count'] + 1;
 
-                countByLocation[rec.AP_group] = countByLocation[rec.AP_group] || {'group': rec.AP_group, 'count': 0};
+                // Calculate the count per AP group too, with key = AP_group
+                countByLocation[rec.AP_group] = countByLocation[rec.AP_group] || {'id': rec.AP_group, 'group': rec.AP_group, 'count': 0};
                 countByLocation[rec.AP_group]['count'] = countByLocation[rec.AP_group]['count'] + 1;
             };
 
+            // Iterate through list to get the total count for each location, stored in countByLocation
             R.map(countRecord, list);
-            return R.toPairs(countByLocation);
+
+            // Returns an array of {id, group, count}
+            return R.values(countByLocation);
         };
 
-        const storeCountByLocation = countByLocPairs => {
-            const date = timestamp.clone().startOf('day').toDate();
-            const hour = timestamp.hour();
-            const minute = timestamp.minute();
-
-            const storeRecord = pair => {
-                return locationDataRepo.update(pair[0], pair[1].group, date, hour, minute, pair[1].count);
-            };
-            return Promise.all(R.map(storeRecord, countByLocPairs));
+        const storeCountByLocation = list => {
+            return locationDataRepo.updateMany(list, timestamp);
         };
 
-        const getCountAndStore = R.pipe(getCountByLocationPairs, storeCountByLocation);
+        const getCountAndStore = R.pipe(getCountByLocation, storeCountByLocation);
         return getCountAndStore(data);
     };
 

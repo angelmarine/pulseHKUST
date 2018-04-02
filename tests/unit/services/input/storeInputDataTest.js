@@ -13,7 +13,7 @@ describe('storeInputData', function() {
     };
 
     const locationDataRepo = {
-        update: sinon.stub().returns(Promise.resolve())
+        updateMany: sinon.stub().returns(Promise.resolve())
     };
 
     const storeInputData = require('../../../../src/services/input/storeInputData')(rawDataRepo, locationDataRepo);
@@ -29,9 +29,7 @@ describe('storeInputData', function() {
 
     const testDate = moment([2017, 10, 13, 16, 20]);
     // const testDate = new Date('2017-12-13T08:20:00.000Z');
-    const expectedDate = moment([2017, 10, 13, 0, 0]);
-    const expectedHour = 16;
-    const expectedMinute = 20;
+    const expectedDate = moment([2017, 10, 13, 16, 20]);
     // Prepare data
     let data = [];
     data.push(createInputObj('000af58da724', 't524ctlg701', 'ctlg7', testDate));
@@ -48,27 +46,18 @@ describe('storeInputData', function() {
     });
 
     it('should store aggregated count by apId and by apGroup into locationDataRepo', function() {
-        const expected = [
-            ['t524ctlg701', 'ctlg7', expectedDate, expectedHour, expectedMinute, 2],
-            ['ctlg7', 'ctlg7', expectedDate, expectedHour, expectedMinute, 2],
-            ['t602ug9g2', 'ug9', expectedDate, expectedHour, expectedMinute, 1],
-            ['ug9', 'ug9', expectedDate, expectedHour, expectedMinute, 1]
+        const expectedData = [
+            {id: 't524ctlg701', group: 'ctlg7', count: 2},
+            {id: 'ctlg7', group: 'ctlg7', count: 2},
+            {id: 't602ug9g2', group: 'ug9', count: 1},
+            {id: 'ug9', group: 'ug9', count: 1},
         ];
 
-        locationDataRepo.update.callCount.should.equal(expected.length);
+        locationDataRepo.updateMany.callCount.should.equal(1);
 
-        const callArgs = locationDataRepo.update.args;
-        const deepAssertion = (actual, expected) => {
-          actual[0].should.equal(expected[0]);
-          actual[1].should.equal(expected[1]);
-          actual[2].isSame(expected[2]).should.equal(true);
-          actual[3].should.equal(expected[3]);
-          actual[4].should.equal(expected[4]);
-          actual[5].should.equal(expected[5]);
-        };
-        for (let i in R.range(0, expected.length)) {
-            deepAssertion(callArgs[i], expected[i]);
-        }
+        const callArgs = locationDataRepo.updateMany.args;
+        callArgs[0][0].should.deep.equal(expectedData);
+        callArgs[0][1].isSame(expectedDate).should.equal(true);
     });
 
 
