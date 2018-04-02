@@ -46,6 +46,8 @@ const locationDataSchema = new mongoose.Schema({
     }]
 });
 
+locationDataSchema.index({"Count_timestamp.Day":1});
+
 // Set location data model associated with location data schema
 const locationDataModel = mongoose.model('locationData', locationDataSchema);
 
