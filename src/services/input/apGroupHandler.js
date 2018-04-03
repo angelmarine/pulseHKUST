@@ -1,7 +1,3 @@
-/**
- * Created by felyciagunawan on 22/2/2018.
- */
-
 const R = require('ramda');
 
 const assignApGroup = (apId) => {
@@ -28,4 +24,29 @@ const assignApGroup = (apId) => {
 
 };
 
-module.exports = assignApGroup;
+const getApGroupList = () => {
+    return [
+        "ctlg1",
+        "ctlg5",
+        "ctlg7",
+        "lib1",
+        "libg",
+        "liblg1",
+        "liblg3",
+        "liblg4",
+        "nor",
+        "pg1",
+        "pg2",
+        "sou",
+        "ug1",
+        "ug2",
+        "ug3",
+        "ug4",
+        "ug6",
+        "ug7",
+        "ug8",
+        "ug9"
+    ]
+};
+
+module.exports = {assignApGroup, getApGroupList};

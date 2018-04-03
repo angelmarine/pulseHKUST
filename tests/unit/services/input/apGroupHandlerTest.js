@@ -4,8 +4,8 @@
 
 const should = require('chai').should();
 const R = require('ramda');
-const assignApGroup = require('../../../../src/services/input/apGroupHandler');
-
+const apGroupHandler = require('../../../../src/services/input/apGroupHandler');
+const assignApGroup = apGroupHandler.assignApGroup;
 
 describe('apGroupHandler', function() {
     it('should return correct AP group if keyword matches', function() {

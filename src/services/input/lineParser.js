@@ -4,7 +4,7 @@
 
 const R = require('ramda');
 const logger = require('../../utils/logger');
-const assignApGroup = require('./apGroupHandler');
+const apGroupHandler = require('./apGroupHandler');
 
 const lineParser = (line) => {
     const linePattern = new RegExp(/(\S+), *(\S+), *(\S+), *(\S+),/);
@@ -17,7 +17,7 @@ const lineParser = (line) => {
 
     const transform = group => {
         const AP_id = group[3];
-        const AP_group = assignApGroup(AP_id);
+        const AP_group = apGroupHandler.assignApGroup(AP_id);
 
         if(AP_group === null) return null;
         return {
