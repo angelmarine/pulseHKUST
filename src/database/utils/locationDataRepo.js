@@ -147,7 +147,25 @@ const make = (locationDataModel = require('../schema/locationData.js')) => {
         return locationDataModel.findOneAndRemove(query).exec();
     };
 
-    return {update, updateMany, deleteByAPId}
+    /*
+        Returns the one-day record for given apIds.
+     */
+    const findByApIdsAndDay = (apIds, date) => {
+        // const date = timestamp.clone().startOf('day').toDate();
+        return locationDataModel.aggregate([
+            {$match: {'AP_id': {$in: apIds}}},
+            {$project: {
+                '_id': 0,
+                'AP_id': 1,
+                'Count_timestamp': {$filter: {
+                    input: '$Count_timestamp',
+                    as: 'item',
+                    cond: {$eq: ['$$item.Day', date.startOf('day').toDate()]}}}
+            }}
+        ])
+    };
+
+    return {update, updateMany, deleteByAPId, findByApIdsAndDay}
 };
 
 module.exports = make;
