@@ -1,12 +1,10 @@
-#!/bin/bash
-
-ORIGFOLDER="C:\\Users\\Bon\\Desktop\\bulkUploadTest\\data_file_new"
-DESTFOLDER="C:\\Users\\Bon\\Desktop\\bulkUploadTest\\data_file_uploaded"
+ORIGFOLDER=dev/fyp/data_file_new/*
+DESTFOLDER=dev/fyp/data_file_uploaded/
 for f in $ORIGFOLDER
 do
 	DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 	echo "$DATE  Processing $f"
-	curl -X POST http://localhost:3000/input/upload -F data=@$f
+	curl -X POST http://localhost:3000/api/input/upload -F data=@$f
 	mv $f $DESTFOLDER
 	printf '\n'
 	sleep 60
