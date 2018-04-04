@@ -151,7 +151,7 @@ const make = (locationDataModel = require('../schema/locationData.js')) => {
         Returns the one-day record for given apIds.
      */
     const findByApIdsAndDay = (apIds, date) => {
-        // const date = timestamp.clone().startOf('day').toDate();
+        const jsDate = date.startOf('day').toDate();
         return locationDataModel.aggregate([
             {$match: {'AP_id': {$in: apIds}}},
             {$project: {
@@ -160,12 +160,35 @@ const make = (locationDataModel = require('../schema/locationData.js')) => {
                 'Count_timestamp': {$filter: {
                     input: '$Count_timestamp',
                     as: 'item',
-                    cond: {$eq: ['$$item.Day', date.startOf('day').toDate()]}}}
+                    cond: {$eq: ['$$item.Day',jsDate]}}}
             }}
         ])
     };
 
-    return {update, updateMany, deleteByAPId, findByApIdsAndDay}
+    const findByApIdsAndRange = (apIds, startDate, endDate) => {
+        const jsStartDate = startDate.startOf('day').toDate();
+        const jsEndDate = endDate.startOf('day').toDate();
+        return locationDataModel.aggregate([
+            {$match: {'AP_id': {$in: apIds}}},
+            {$project: {
+                '_id': 0,
+                'AP_id': 1,
+                'Count_timestamp': {$filter: {
+                    input: '$Count_timestamp',
+                    as: 'item',
+                    cond: {
+                        $and: [
+                            {$gte: ['$$item.Day', jsStartDate]},
+                            {$lte: ['$$item.Day', jsEndDate]}
+                        ]
+                    }
+                }}
+            }}
+        ])
+
+    };
+
+    return {update, updateMany, deleteByAPId, findByApIdsAndDay, findByApIdsAndRange}
 };
 
 module.exports = make;
