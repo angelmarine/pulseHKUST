@@ -35,6 +35,7 @@ describe('storeInputData', function() {
     data.push(createInputObj('000af58da724', 't524ctlg701', 'ctlg7', testDate));
     data.push(createInputObj('000af5bfb060', 't524ctlg701', 'ctlg7', testDate));
     data.push(createInputObj('000af5bfb062', 't602ug9g2', 'ug9', testDate));
+    data.push(createInputObj('000af5bfb062', 't602ug7g2', 'ug7', testDate));
 
     storeInputData(data);
 
@@ -51,6 +52,10 @@ describe('storeInputData', function() {
             {id: 'ctlg7', group: 'ctlg7', count: 2},
             {id: 't602ug9g2', group: 'ug9', count: 1},
             {id: 'ug9', group: 'ug9', count: 1},
+            {id: 't602ug7g2', group: 'ug7', count: 1},
+            {id: 'ug7', group: 'ug7', count: 1},
+            {id: 'lib', group: 'lib', count: 0},
+            {id: 'hall', group: 'hall', count: 2}
         ];
 
         locationDataRepo.updateMany.callCount.should.equal(1);

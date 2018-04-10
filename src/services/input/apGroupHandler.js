@@ -45,8 +45,29 @@ const getApGroupList = () => {
         "ug6",
         "ug7",
         "ug8",
-        "ug9"
+        "ug9",
+        "lib",
+        "hall"
     ]
 };
 
-module.exports = {assignApGroup, getApGroupList};
+const getCompactList = () => {
+    return [
+        "ctlg1",
+        "ctlg5",
+        "ctlg7",
+        "nor",
+        "sou",
+        "lib",
+        "hall"
+    ]
+};
+
+const getBundlelist = () => {
+    return {
+        "lib" : ["lib1", "libg", "liblg1", "liblg3", "liblg4"],
+        "hall" : ["pg1", "pg2", "ug1", "ug2", "ug3", "ug4", "ug6", "ug7", "ug8", "ug9"]
+    }
+};
+
+module.exports = {assignApGroup, getApGroupList, getCompactList, getBundlelist};
