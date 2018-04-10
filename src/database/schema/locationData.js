@@ -19,6 +19,7 @@ const hourMinuteObj = new mongoose.Schema({
     6: {type:minuteObj, default:minuteObj},
     7: {type:minuteObj, default:minuteObj},
     8: {type:minuteObj, default:minuteObj},
+    9: {type:minuteObj, default:minuteObj},
     10: {type:minuteObj, default:minuteObj},
     11: {type:minuteObj, default:minuteObj},
     12: {type:minuteObj, default:minuteObj},
