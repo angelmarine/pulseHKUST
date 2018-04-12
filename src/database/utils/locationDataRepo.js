@@ -151,7 +151,7 @@ const make = (locationDataModel = require('../schema/locationData.js')) => {
         Returns the one-day record for given apIds.
      */
     const findByApIdsAndDay = (apIds, date) => {
-        const jsDate = date.startOf('day').toDate();
+        const jsDate = date.clone().startOf('day').toDate();
         return locationDataModel.aggregate([
             {$match: {'AP_id': {$in: apIds}}},
             {$project: {
@@ -166,8 +166,8 @@ const make = (locationDataModel = require('../schema/locationData.js')) => {
     };
 
     const findByApIdsAndRange = (apIds, startDate, endDate) => {
-        const jsStartDate = startDate.startOf('day').toDate();
-        const jsEndDate = endDate.startOf('day').toDate();
+        const jsStartDate = startDate.clone().startOf('day').toDate();
+        const jsEndDate = endDate.clone().startOf('day').toDate();
         return locationDataModel.aggregate([
             {$match: {'AP_id': {$in: apIds}}},
             {$project: {
