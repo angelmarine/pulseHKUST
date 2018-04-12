@@ -2,6 +2,8 @@ const express = require('express');
 const moment = require('moment');
 const router = express.Router();
 const locationDataServices = require('../services/locationDataServices')();
+const dwellTimeDataServices = require('../services/dwellTimeDataServices')();
+const apGroupHandler = require('../services/input/apGroupHandler');
 
 // Enforce strict format of date string
 const isValidDate = date => moment(date, 'YYYY-MM-DD', true).isValid();
@@ -46,5 +48,18 @@ router.get('/stream/from=:from&to=:to', function(req, res, next) {
     }
 });
 
+router.get('/dwell/group=:group&date=:date', function(req, res, next) {
+    const validGroup = apGroupHandler.getApGroupList();
+    if(validGroup.indexOf(req.params.group) < 0) {
+        res.status(400).send({'message': 'AP group unknown'})
+    }
+    if(isValidDate(req.params.date)) {
+        const date = moment(req.params.date, 'YYYY-MM-DD');
+        return dwellTimeDataServices.getHourlyAvgForDay(req.params.group, date)
+            .then(data => res.send({data}));
+    } else {
+        res.status(400).send({'message': 'Dates must be specified in YYYY-MM-DD format.'})
+    }
+});
 
 module.exports = router;

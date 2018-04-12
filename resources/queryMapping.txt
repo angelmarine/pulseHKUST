@@ -1,0 +1,5 @@
+Dwelling avg:
+Query:
+    localhost:3000/api/data/dwell/group=hall&date=2018-03-04
+Response:
+    sampleDwellAvgData.json
