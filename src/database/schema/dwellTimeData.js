@@ -5,7 +5,7 @@ const dwellTimeDataSchema = new mongoose.Schema({
     AP_group: String,
     Start_ts: Date,
     End_ts: Date,
-    Dwell_time: Number
+    Duration: Number
 });
 
 dwellTimeDataSchema.index({ AP_group: 1, Start_ts: 1});
