@@ -9,7 +9,8 @@ const make = (locationDataRepo = require('../database/utils/locationDataRepo')()
         return locationDataRepo.findByApIdsAndDay(apGroupList, date);
     };
 
-    const getDataForDateRange = (startDate, endDate, apGroupList = apGroupHandler.getApGroupList()) => {
+    const getDataForDateRange = (startDate, endDate) => {
+        const apGroupList = apGroupHandler.getApGroupList();
         return locationDataRepo.findByApIdsAndRange(apGroupList, startDate, endDate);
     };
 
@@ -44,7 +45,7 @@ const make = (locationDataRepo = require('../database/utils/locationDataRepo')()
             }
         };
 
-        return getDataForDateRange(startDate, endDate, apGroupHandler.getCompactList())
+        return getDataForDateRange(startDate, endDate)
             .then(data => {
                 R.map(mapData, data);
                 return newData;

@@ -5,17 +5,17 @@ const assignApGroup = (apId) => {
         'ctl': (id) => {return id.slice(4, -2)},
         'sou': () => {return 'sou'},
         'nor': () => {return 'nor'},
-        'pg1': () => {return 'pg1'},
-        'pg2': () => {return 'pg2'},
-        'ug1': () => {return 'ug1'},
-        'ug2': () => {return 'ug2'},
-        'ug3': () => {return 'ug3'},
-        'ug4': () => {return 'ug4'},
-        'ug6': () => {return 'ug6'},
-        'ug7': () => {return 'ug7'},
-        'ug8': () => {return 'ug8'},
-        'ug9': () => {return 'ug9'},
-        'lib': (id) => {return id.slice(4, -2)}
+        'pg1': () => {return 'hall'},
+        'pg2': () => {return 'hall'},
+        'ug1': () => {return 'hall'},
+        'ug2': () => {return 'hall'},
+        'ug3': () => {return 'hall'},
+        'ug4': () => {return 'hall'},
+        'ug6': () => {return 'hall'},
+        'ug7': () => {return 'hall'},
+        'ug8': () => {return 'hall'},
+        'ug9': () => {return 'hall'},
+        'lib': () => {return 'lib'}
     };
 
     const func = keywordToGroup[apId.slice(4, 7)];
@@ -29,33 +29,6 @@ const getApGroupList = () => {
         "ctlg1",
         "ctlg5",
         "ctlg7",
-        "lib1",
-        "libg",
-        "liblg1",
-        "liblg3",
-        "liblg4",
-        "nor",
-        "pg1",
-        "pg2",
-        "sou",
-        "ug1",
-        "ug2",
-        "ug3",
-        "ug4",
-        "ug6",
-        "ug7",
-        "ug8",
-        "ug9",
-        "lib",
-        "hall"
-    ]
-};
-
-const getCompactList = () => {
-    return [
-        "ctlg1",
-        "ctlg5",
-        "ctlg7",
         "nor",
         "sou",
         "lib",
@@ -63,11 +36,4 @@ const getCompactList = () => {
     ]
 };
 
-const getBundlelist = () => {
-    return {
-        "lib" : ["lib1", "libg", "liblg1", "liblg3", "liblg4"],
-        "hall" : ["pg1", "pg2", "ug1", "ug2", "ug3", "ug4", "ug6", "ug7", "ug8", "ug9"]
-    }
-};
-
-module.exports = {assignApGroup, getApGroupList, getCompactList, getBundlelist};
+module.exports = {assignApGroup, getApGroupList};
