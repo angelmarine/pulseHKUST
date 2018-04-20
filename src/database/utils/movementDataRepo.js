@@ -17,7 +17,6 @@ const insertMany = data => {
     return movementDataModel.bulkWrite(R.map(createUpdateReq, data))
 };
 
-// TODO: getHourlyFrequency
 const getHourMovement = date => {
     const startDate = date.clone().startOf('hour').toDate();
     const endDate = date.clone().endOf('hour').toDate();

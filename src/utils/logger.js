@@ -1,7 +1,6 @@
 const winston = require('winston');
 const fs = require('fs');
 const env = process.env.NODE_ENV || 'development';
-// TODO: Use environment variable
 const logDir = './log';
 // Create the log directory if it does not exist
 if (!fs.existsSync(logDir)) {

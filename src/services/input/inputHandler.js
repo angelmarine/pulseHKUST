@@ -42,7 +42,6 @@ const make = (lineParser = require('./lineParser'),
             })
             .catch(err => {
                 logger.error(`Processing input file failed: ${err.message} \n ${err.stack}`);
-                //TODO: send email notification on failure
             })
     };
 
