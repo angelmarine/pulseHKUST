@@ -41,13 +41,14 @@ const make = (dwellTimeDataRepo = require('../database/utils/dwellTimeDataRepo')
             });
     };
 
-    const getHourStats = (AP_group, date, hour) => {
-        const dateWithHour = date.add(hour, 'hours');
-        return dwellTimeDataRepo.getHourStats(AP_group, dateWithHour)
-            .then(res => R.map(obtainTimeRangeLabel(), res));
-    };
+    // const getHourStats = (AP_group, date, hour) => {
+    //     const dateWithHour = date.add(hour, 'hours');
+    //     return dwellTimeDataRepo.getHourStats(AP_group, dateWithHour)
+    //         .then(res => R.map(obtainTimeRangeLabel(), res));
+    // };
 
-    return {getHourlyAvgForDay, getHourStats}
+    // return {getHourlyAvgForDay, getHourStats}
+    return {getHourlyAvgForDay}
 };
 
 module.exports = make;

@@ -5,13 +5,13 @@ const should = require('chai').should();
 const inputParser = require('../../../../src/services/input/lineParser');
 
 
-describe('inputParser', function() {
+describe('line parser', function() {
     it('should parse the input and extract date from filename', function() {
         const line = "000af58da724, 10.89.82.199, t252pg2024, eduroam,";
         const expected = {
             'MAC_id': '000af58da724',
             'AP_id': 't252pg2024',
-            'AP_group': 'pg2'
+            'AP_group': 'hall'
         };
         const actual = inputParser(line);
         // actual['MAC_id'].should.equal('000af58da724');

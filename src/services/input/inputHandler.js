@@ -1,6 +1,3 @@
-/**
- * Created by felyciagunawan on 20/11/2017.
- */
 const R = require('ramda');
 const readline = require('readline');
 const fs = require('fs');

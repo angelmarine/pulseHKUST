@@ -1,7 +1,3 @@
-/**
- * Created by felyciagunawan on 22/11/2017.
- */
-
 const R = require('ramda');
 const fs = require('fs');
 const logger = require('../utils/logger');

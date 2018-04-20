@@ -3,6 +3,7 @@ const moment = require('moment');
 const router = express.Router();
 const locationDataServices = require('../services/locationDataServices')();
 const dwellTimeDataServices = require('../services/dwellTimeDataServices')();
+const movementDataServices = require('../services/movementDataServices');
 const apGroupHandler = require('../services/input/apGroupHandler');
 
 // Enforce strict format of date string
@@ -62,21 +63,32 @@ router.get('/dwell/group=:group&date=:date', function(req, res, next) {
     }
 });
 
-router.get('/dwell/hour/group=:group&date=:date&hour=:hour', function(req, res, next) {
-    const validGroup = apGroupHandler.getApGroupList();
-    if(validGroup.indexOf(req.params.group) < 0) {
-        res.status(400).send({'message': 'AP group unknown'})
-    }
-    if(req.params.group > 24 || req.params.group < 0) {
-        res.status(400).send({'message': 'Hour is out of range'})
-    }
+router.get('/matrix/date=:date', function(req, res, next) {
     if(isValidDate(req.params.date)) {
         const date = moment(req.params.date, 'YYYY-MM-DD');
-        return dwellTimeDataServices.getHourStats(req.params.group, date, req.params.hour)
-            .then(data => res.send({data}));
+        return movementDataServices.getHourlyMatrixForDay(date)
+            .then(data => res.send({order: data['apGroupList'], data: data['matrices']}));
     } else {
         res.status(400).send({'message': 'Dates must be specified in YYYY-MM-DD format.'})
     }
 });
+
+
+// router.get('/dwell/hour/group=:group&date=:date&hour=:hour', function(req, res, next) {
+//     const validGroup = apGroupHandler.getApGroupList();
+//     if(validGroup.indexOf(req.params.group) < 0) {
+//         res.status(400).send({'message': 'AP group unknown'})
+//     }
+//     if(req.params.group > 24 || req.params.group < 0) {
+//         res.status(400).send({'message': 'Hour is out of range'})
+//     }
+//     if(isValidDate(req.params.date)) {
+//         const date = moment(req.params.date, 'YYYY-MM-DD');
+//         return dwellTimeDataServices.getHourStats(req.params.group, date, req.params.hour)
+//             .then(data => res.send({data}));
+//     } else {
+//         res.status(400).send({'message': 'Dates must be specified in YYYY-MM-DD format.'})
+//     }
+// });
 
 module.exports = router;

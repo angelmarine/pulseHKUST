@@ -1,6 +1,3 @@
-/**
- * Created by felyciagunawan on 18/1/2018.
- */
 const winston = require('winston');
 const fs = require('fs');
 const env = process.env.NODE_ENV || 'development';

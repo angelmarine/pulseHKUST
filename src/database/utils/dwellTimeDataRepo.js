@@ -30,7 +30,7 @@ const getHourlyAvgForDay = (AP_group, date) => {
             }
         },
         {
-            $group: {_id: {$hour: '$Start_ts'}, avg: {$avg: '$Duration'}, stdev: {$stdDevPop: '$Duration'}}
+            $group: {_id: {$hour: '$Start_ts'}, avg: {$avg: '$Duration'}}
         },
         {
             $project: {'hour': '$_id', avg:1, _id:0}
