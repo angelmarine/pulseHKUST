@@ -52,7 +52,31 @@ const make = (locationDataRepo = require('../database/utils/locationDataRepo')()
             })
     };
 
-    return {getDataForDate, getDataForDateRange, getStreamGraphData}
+    const getHourlyGroupDataForDate = (group, date) => {
+        const sumHour = hourData => {
+            delete hourData['_id'];
+            return R.sum(R.values(hourData));
+        };
+
+        const getLabel = hour => {
+            if (hour < 10) return `0${hour}:00`;
+            return `${hour}:00`;
+        };
+
+        return locationDataRepo.findByApIdsAndDay([group], date)
+            .then(res => {
+                const hourCountMap = res[0]['Count_timestamp'][0]['Hour_minute_count'];
+                delete hourCountMap['_id'];
+                const result = [];
+                for(let key in hourCountMap) {
+                    if (!hourCountMap.hasOwnProperty(key)) continue;
+                    result.push({'time': getLabel(key), 'Count': sumHour(hourCountMap[key])});
+                }
+                return result;
+            })
+    };
+
+    return {getDataForDate, getHourlyGroupDataForDate, getDataForDateRange, getStreamGraphData}
 };
 
 module.exports = make;

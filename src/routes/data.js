@@ -34,6 +34,20 @@ router.get('/range/from=:from&to=:to', function(req, res, next) {
     }
 });
 
+router.get('/date/hourly/group=:group&date=:date', function(req, res, next) {
+    const validGroup = apGroupHandler.getApGroupList();
+    if(validGroup.indexOf(req.params.group) < 0) {
+        res.status(400).send({'message': 'AP group unknown'});
+    }
+    if(isValidDate(req.params.date)) {
+        const date = moment(req.params.date, 'YYYY-MM-DD');
+        locationDataServices.getHourlyGroupDataForDate(req.params.group, date)
+            .then(data => res.send({data}));
+    } else {
+        res.status(400).send({'message': 'Date must be specified in YYYY-MM-DD format.'});
+    }
+});
+
 router.get('/stream/from=:from&to=:to', function(req, res, next) {
     if(isValidDate(req.params.from) && isValidDate(req.params.to)) {
         const startDate = moment(req.params.from, 'YYYY-MM-DD');
