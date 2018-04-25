@@ -36,8 +36,8 @@ const make = (dwellTimeDataRepo = require('../database/utils/dwellTimeDataRepo')
 
         return dwellTimeDataRepo.getHourlyAvgForDay(AP_group, date)
             .then(res => {
-                R.map(changeHourToLocal, res);
-                return Promise.all(R.map(getHourStats, res))
+                const newRes = R.map(changeHourToLocal, res);
+                return Promise.all(R.map(getHourStats, newRes))
             });
     };
 
