@@ -53,9 +53,9 @@ const make = (locationDataRepo = require('../database/utils/locationDataRepo')()
     };
 
     const getHourlyGroupDataForDate = (group, date) => {
-        const sumHour = hourData => {
+        const hourAvg = hourData => {
             delete hourData['_id'];
-            return R.sum(R.values(hourData));
+            return Math.trunc(R.sum(R.values(hourData))/6);
         };
 
         const getLabel = hour => {
@@ -70,7 +70,7 @@ const make = (locationDataRepo = require('../database/utils/locationDataRepo')()
                 const result = [];
                 for(let key in hourCountMap) {
                     if (!hourCountMap.hasOwnProperty(key)) continue;
-                    result.push({'time': getLabel(key), 'Count': sumHour(hourCountMap[key])});
+                    result.push({'time': getLabel(key), 'Count': hourAvg(hourCountMap[key])});
                 }
                 return result;
             })
