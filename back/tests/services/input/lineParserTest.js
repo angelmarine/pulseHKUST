@@ -1,12 +1,9 @@
-/**
- * Created by felyciagunawan on 20/11/2017.
- */
 const should = require('chai').should();
-const inputParser = require('../../../../src/services/input/lineParser');
+const inputParser = require('../../../src/services/input/lineParser');
 
 
 describe('line parser', function() {
-    it('should parse the input and extract date from filename', function() {
+    it('should parse the input line', function() {
         const line = "000af58da724, 10.89.82.199, t252pg2024, eduroam,";
         const expected = {
             'MAC_id': '000af58da724',
@@ -14,8 +11,6 @@ describe('line parser', function() {
             'AP_group': 'hall'
         };
         const actual = inputParser(line);
-        // actual['MAC_id'].should.equal('000af58da724');
-        // actual['AP_id'].should.equal('t252pg2024');
         actual.should.deep.equal(expected);
     });
 

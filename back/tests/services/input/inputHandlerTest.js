@@ -21,17 +21,21 @@ describe('inputHandler', function() {
     lineParser.returns(lineParserResponse);
     storeInputData.returns(Promise.resolve());
 
-    const inputHandler = require('../../../../src/services/input/inputHandler')(lineParser, storeInputData);
+    const inputHandler = require('../../../src/services/input/inputHandler')(lineParser, storeInputData);
 
-    const directory = '/Users/felyciagunawan/dev/fyp/workspace/pulseHKUST/tests/unit/services/input/';
+    const directory = '/Users/felyciagunawan/dev/fyp/workspace/pulseHKUST/back/tests/services/input/';
     const filename = 'filter_user_detail_20171113_1620';
 
     const filePath = directory + filename;
-    const data = '000af58da724, 10.89.82.199, t602all07g, eduroam,\n' +
-        '000af5bfb060, 10.89.168.145, t700norbri01, eduroam,';
-    // Create input file with content
-    fs.writeFileSync(filePath, data);
+    const createFile = () => {
+        const data = '000af58da724, 10.89.82.199, t602all07g, eduroam,\n' +
+            '000af5bfb060, 10.89.168.145, t700norbri01, eduroam,';
+        // Create input file with content
+        fs.writeFileSync(filePath, data);
 
+    };
+
+    createFile();
     inputHandler(directory, filename);
 
     it('should parse input line by line', function() {
@@ -50,18 +54,16 @@ describe('inputHandler', function() {
         fileExists.should.equal(false);
     });
 
+    it('should retain input file on processing failure', function() {
+        createFile();
+        storeInputData.returns(Promise.reject(new Error("test")));
+        inputHandler(directory, filename);
+        const fileExists = fs.existsSync(filePath);
+        fileExists.should.equal(true);
 
-    //TODO: function moved to router
-    // it('should throw error on invalid filename', function() {
-    //     // Require creating a temporary file with invalid filename
-    //     const invalidFilename = 'filter_user_detail_2017113_1620';
-    //     const invalidFilePath = directory + invalidFilename;
-    //     fs.writeFileSync(invalidFilePath, "");
-    //
-    //     const result = () => inputHandler(directory, invalidFilename);
-    //     result.should.throw("Invalid filename");
-    //
-    //     fs.unlink(invalidFilePath);
-    // });
+        // Clean up
+        fs.unlink(filePath);
+    })
+
 
 });
