@@ -1,0 +1,58 @@
+import React from 'react'
+import ChordDatePickerPane from "./ChordDatePickerPane";
+import moment from "moment/moment";
+import MovementChord from './MovementChord';
+import guide from './img/guide-round.svg';
+
+class MainPageTabThree extends React.Component{
+
+    constructor(props){
+        super(props);
+        // used in DateRangePane component
+        this.setDateTime = this.setDateTime.bind(this);
+        this.setDatePickerPaneActive = this.setDatePickerPaneActive.bind(this);
+        this.state = {
+            // for this + child components
+            dateTime: moment(),
+
+            // used in DateRangePane component
+            isDatePickerPaneActive: false,
+        };
+    }
+
+    setDateTime(dateTime){
+        this.setState({
+            dateTime: dateTime
+        });
+    }
+
+    setDatePickerPaneActive(active){
+        this.setState({
+            isDatePickerPaneActive: active
+        })
+    };
+
+    render(){
+        return(
+            <div id='three'>
+                <ChordDatePickerPane
+                    dateTime={moment(this.state.dateTime)}
+                    setDateTime = {this.setDateTime}
+                    setDatePickerPaneActive = {this.setDatePickerPaneActive}
+                    isDatePickerPaneActive = {this.state.isDatePickerPaneActive}
+                    pageWrapId='chord'
+                    outerContainerId='three'/>
+                <div id='chord' style={{'width':'50%', 'position': 'fixed', 'top':'8%', 'left': '25%'}}>
+                    <MovementChord
+                        dateTime={moment(this.state.dateTime)}
+                        />
+                </div>
+                <div>
+                    <img src={guide} hspace="60px" align="right" height="550px" width="400px" />
+            </div>
+            </div>
+        )
+
+    }
+}
+export default MainPageTabThree

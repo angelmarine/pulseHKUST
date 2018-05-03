@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.ib {
+  display: inline-block
+}
+
+.legend {
+  vertical-align: top;
+  text-align: left;
+  margin-top: 50px;
+  margin-right: 50px;
+}
+
+.legend-color {
+  padding-left: 20px;
+  margin-right: 5px;
+}
+
+.legend label{
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
+  font-size: 18px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
