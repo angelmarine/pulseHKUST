@@ -1,7 +1,3 @@
-/**
- * Created by felyciagunawan on 29/11/2017.
- */
-
 const should = require('chai').should();
 const sinon = require('sinon');
 const R = require('ramda');
@@ -16,7 +12,7 @@ describe('storeInputData', function() {
         updateMany: sinon.stub().returns(Promise.resolve())
     };
 
-    const storeInputData = require('../../../../src/services/input/storeInputData')(rawDataRepo, locationDataRepo);
+    const storeInputData = require('../../../src/services/input/storeInputData')(rawDataRepo, locationDataRepo);
 
     const createInputObj = (MAC_id, AP_id, AP_group, Timestamp) => {
         return {
@@ -34,13 +30,13 @@ describe('storeInputData', function() {
     let data = [];
     data.push(createInputObj('000af58da724', 't524ctlg701', 'ctlg7', testDate));
     data.push(createInputObj('000af5bfb060', 't524ctlg701', 'ctlg7', testDate));
-    data.push(createInputObj('000af5bfb062', 't602ug9g2', 'ug9', testDate));
-    data.push(createInputObj('000af5bfb062', 't602ug7g2', 'ug7', testDate));
+    data.push(createInputObj('000af5bfb062', 't602ug9g2', 'hall', testDate));
+    data.push(createInputObj('000af5bfb062', 't602ug7g2', 'hall', testDate));
 
     storeInputData(data);
 
-    it('should store complete records into rawDataRepo one by one', function() {
-        rawDataRepo.save.callCount.should.equal(data.length);
+    it('should store complete records into rawDataRepo in bulk', function() {
+        rawDataRepo.save.callCount.should.equal(1);
 
         const callArgs = R.flatten(rawDataRepo.save.args);
         callArgs.should.deep.equal(data);
@@ -50,12 +46,9 @@ describe('storeInputData', function() {
         const expectedData = [
             {id: 't524ctlg701', group: 'ctlg7', count: 2},
             {id: 'ctlg7', group: 'ctlg7', count: 2},
-            {id: 't602ug9g2', group: 'ug9', count: 1},
-            {id: 'ug9', group: 'ug9', count: 1},
-            {id: 't602ug7g2', group: 'ug7', count: 1},
-            {id: 'ug7', group: 'ug7', count: 1},
-            {id: 'lib', group: 'lib', count: 0},
-            {id: 'hall', group: 'hall', count: 2}
+            {id: 't602ug9g2', group: 'hall', count: 1},
+            {id: 'hall', group: 'hall', count: 2},
+            {id: 't602ug7g2', group: 'hall', count: 1}
         ];
 
         locationDataRepo.updateMany.callCount.should.equal(1);

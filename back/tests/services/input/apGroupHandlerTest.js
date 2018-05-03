@@ -4,7 +4,7 @@
 
 const should = require('chai').should();
 const R = require('ramda');
-const apGroupHandler = require('../../../../src/services/input/apGroupHandler');
+const apGroupHandler = require('../../../src/services/input/apGroupHandler');
 const assignApGroup = apGroupHandler.assignApGroup;
 
 describe('apGroupHandler', function() {
@@ -34,20 +34,20 @@ describe('apGroupHandler', function() {
             'ctlg1',
             'sou',
             'nor',
-            'pg1',
-            'pg2',
-            'ug1',
-            'ug2',
-            'ug3',
-            'ug4',
-            'ug6',
-            'ug7',
-            'ug8',
-            'ug9',
-            'liblg1',
-            'liblg3',
-            'liblg4',
-            'libg'
+            'hall',
+            'hall',
+            'hall',
+            'hall',
+            'hall',
+            'hall',
+            'hall',
+            'hall',
+            'hall',
+            'hall',
+            'lib',
+            'lib',
+            'lib',
+            'lib'
         ];
 
         const actual = R.map(assignApGroup, listOfApId);
