@@ -9,16 +9,23 @@ class MainPageTabThree extends React.Component{
     constructor(props){
         super(props);
         // used in DateRangePane component
+        this.floorDateTime = this.floorDateTime.bind(this);
         this.setDateTime = this.setDateTime.bind(this);
         this.setDatePickerPaneActive = this.setDatePickerPaneActive.bind(this);
         this.state = {
             // for this + child components
-            dateTime: moment(),
+            dateTime: this.floorDateTime(moment()),
 
             // used in DateRangePane component
             isDatePickerPaneActive: false,
         };
     }
+
+    floorDateTime(now){
+        const ROUNDING = 10 * 60 * 1000; /*ms*/
+        return moment(Math.floor((+now) / ROUNDING) * ROUNDING);
+        //return moment(Math.floor((+now) / ROUNDING) * ROUNDING).format('YYYY-MM-DD HH:mm'); // returns string value, not moment object
+    };
 
     setDateTime(dateTime){
         this.setState({
