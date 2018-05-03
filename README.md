@@ -1,5 +1,5 @@
 # FYP - Pulse Of HKUST
-## Crowd Behavior Analysis and Visualization for HKUST Campus
+## System for Visualizing Crowd Behavior in HKUST Campus
 ### By Felycia & Bon Kyung
 
 ### Getting Started
