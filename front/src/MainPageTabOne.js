@@ -27,7 +27,8 @@ class MainPageTabOne extends React.Component{
 
         this.state = {
             // for this + child components
-            dateTime: this.floorDateTime(moment()),
+            // dateTime: this.floorDateTime(moment()),
+            dateTime: this.floorDateTime(moment("2018-03-09 17:00")),
 
             // used in DashboardPane component
             isDashboardPaneActive: false,

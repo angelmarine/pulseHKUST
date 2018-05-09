@@ -14,8 +14,8 @@ class MainPageTabThree extends React.Component{
         this.setDatePickerPaneActive = this.setDatePickerPaneActive.bind(this);
         this.state = {
             // for this + child components
-            dateTime: this.floorDateTime(moment()),
-
+            //dateTime: this.floorDateTime(moment()),
+            dateTime: this.floorDateTime(moment("2018-03-09 17:00")),
             // used in DateRangePane component
             isDatePickerPaneActive: false,
         };

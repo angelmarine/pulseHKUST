@@ -10,11 +10,12 @@ class MainPageTabTwo extends React.Component{
         // used in DateRangePane component
         this.setStartEndDate = this.setStartEndDate.bind(this);
         this.setDateRangePaneActive = this.setDateRangePaneActive.bind(this);
-        let now = moment();
+        // let now = moment();
+        let now = moment("2018-03-09");
         this.state = {
             // for this + child components
             endDate: moment(now),
-            startDate: moment(now.subtract(7, 'days')),
+            startDate: moment(now.subtract(4, 'days')),
             // used in DatePickerPane component
             isDateRangePaneActive: false,
         };
