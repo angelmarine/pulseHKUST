@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import './styles/App.css'
+import '../../styles/app.css'
 import 'whatwg-fetch'
 import moment from 'moment'
-import background from './img/background-map-labels.png'
+import background from '../../img/background-map-labels.png'
 const d3 = require('d3');
 
-class BubbleChart extends Component {
+class MapBubble extends Component {
 
     constructor(props){
         super(props);
@@ -219,4 +219,4 @@ class BubbleChart extends Component {
     }
 }
 
-export default BubbleChart;
+export default MapBubble;

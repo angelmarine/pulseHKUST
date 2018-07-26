@@ -1,13 +1,13 @@
 import React from 'react'
-import ThemeRiver from './ThemeRiver'
-import DateRangePane from "./DateRangePane";
+import Themeriver from '../Graph/Themeriver'
+import ThemeriverDate from "../Pane/ThemeriverDate";
 import moment from "moment/moment";
 
-class MainPageTabTwo extends React.Component{
+class ThemeriverTab extends React.Component{
 
     constructor(props){
         super(props);
-        // used in DateRangePane component
+        // used in ThemeriverDate component
         this.setStartEndDate = this.setStartEndDate.bind(this);
         this.setDateRangePaneActive = this.setDateRangePaneActive.bind(this);
         // let now = moment();
@@ -39,7 +39,7 @@ class MainPageTabTwo extends React.Component{
     render(){
         return(
             <div id='two'>
-                <DateRangePane
+                <ThemeriverDate
                     startDate={moment(this.state.startDate)}
                     endDate={moment(this.state.endDate)}
                     setStartEndDate = {this.setStartEndDate}
@@ -48,7 +48,7 @@ class MainPageTabTwo extends React.Component{
                     pageWrapId='themeriver'
                     outerContainerId='two'/>
                 <div id='themeriver'>
-                    <ThemeRiver
+                    <Themeriver
                         startDate={moment(this.state.startDate)}
                         endDate={moment(this.state.endDate)}/>
                 </div>
@@ -57,4 +57,4 @@ class MainPageTabTwo extends React.Component{
 
     }
 }
-export default MainPageTabTwo
+export default ThemeriverTab

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import './styles/App.css'
+import '../../styles/app.css'
 import {BarChart, CartesianGrid, XAxis, YAxis, Tooltip,Bar } from 'recharts';
 const R = require('ramda');
 
-class DwellBarChart extends Component {
+class DashboardDwellBar extends Component {
 
     constructor(props){
         super(props);
@@ -53,4 +53,4 @@ class DwellBarChart extends Component {
     }
 }
 
-export default DwellBarChart;
+export default DashboardDwellBar;

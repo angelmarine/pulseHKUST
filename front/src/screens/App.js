@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import './styles/App.css'
-import MainPageTab from './MainPageTab.js'
+import '../styles/app.css'
+import MainPageTab from '../components/Tab/MainTab.js'
 
 
 class App extends Component {

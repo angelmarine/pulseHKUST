@@ -1,11 +1,11 @@
 import React from'react'
-import BubbleChart from './BubbleChart.js'
-import BubbleDatePickerPane from './BubbleDatePickerPane'
-import DashboardPane from './DashboardPane'
+import MapBubble from '../Graph/MapBubble.js'
+import MapDate from '../Pane/MapDate'
+import Dashboard from '../Pane/Dashboard'
 import 'whatwg-fetch'
 import moment from "moment/moment"
 
-class MainPageTabOne extends React.Component{
+class MapViewTab extends React.Component{
 
     constructor(props){
         super(props);
@@ -16,11 +16,11 @@ class MainPageTabOne extends React.Component{
         this.setDateTime = this.setDateTime.bind(this);
         this.setDatePickerPaneActive = this.setDatePickerPaneActive.bind(this);
 
-        // used in DashboardPane component
+        // used in Dashboard component
         this.onClose = this.onClose.bind(this);
         this.setDashboardPaneActive = this.setDashboardPaneActive.bind(this);
 
-        // used in BubbleChart component
+        // used in MapBubble component
         this.onClick = this.onClick.bind(this);
         this.onHover = this.onHover.bind(this);
         this.noHover = this.noHover.bind(this);
@@ -30,14 +30,14 @@ class MainPageTabOne extends React.Component{
             // dateTime: this.floorDateTime(moment()),
             dateTime: this.floorDateTime(moment("2018-03-09 17:00")),
 
-            // used in DashboardPane component
+            // used in Dashboard component
             isDashboardPaneActive: false,
             clickedElement: "none", //AP_group of the clicked location
 
             // used in DatePickerPane component
             isDatePickerPaneActive: false,
 
-            // used in BubbleChart component
+            // used in MapBubble component
             hover: "none"
         };
 
@@ -97,13 +97,13 @@ class MainPageTabOne extends React.Component{
     render(){
         return(
             <div id='one'>
-                <DashboardPane
+                <Dashboard
                     dateTime={moment(this.state.dateTime)}
                     onClose = {this.onClose}
                     isDashboardPaneActive = {this.state.isDashboardPaneActive}
                     clickedElement={this.state.clickedElement}
                 />
-                <BubbleDatePickerPane
+                <MapDate
                     dateTime={moment(this.state.dateTime)}
                     setDateTime = {this.setDateTime}
                     setDatePickerPaneActive = {this.setDatePickerPaneActive}
@@ -111,7 +111,7 @@ class MainPageTabOne extends React.Component{
                     pageWrapId='bubble'
                     outerContainerId='one'/>
                 <div id='bubble'>
-                        <BubbleChart
+                        <MapBubble
                             dateTime={moment(this.state.dateTime)}
                             size={[1500,800]}
                             hoverElement = {this.state.hover}
@@ -125,4 +125,4 @@ class MainPageTabOne extends React.Component{
 
 }
 
-export default MainPageTabOne;
+export default MapViewTab;

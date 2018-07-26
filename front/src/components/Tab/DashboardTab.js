@@ -1,11 +1,11 @@
 import React from 'react';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
-import CountBarChart from "./CountBarChart";
-import DwellChart from "./DwellChart";
+import DashboardCountBar from "../Graph/DashboardCountBar";
+import DashboardDwell from "../Graph/DashboardDwell";
 import moment from 'moment';
 
-class DashboardTabPage extends React.Component {
+class DashboardTab extends React.Component {
     render(){
         return(
             <Tabs
@@ -17,10 +17,10 @@ class DashboardTabPage extends React.Component {
                     <Tab tabFor="two">Dwelling time at different times of the day</Tab>
                 </TabList>
                 <TabPanel tabId="one">
-                    <CountBarChart dateTime={moment(this.props.dateTime)} clickedElement={this.props.clickedElement}/>
+                    <DashboardCountBar dateTime={moment(this.props.dateTime)} clickedElement={this.props.clickedElement}/>
                 </TabPanel>
                 <TabPanel tabId="two">
-                    <DwellChart dateTime={moment(this.props.dateTime)} clickedElement={this.props.clickedElement}/>
+                    <DashboardDwell dateTime={moment(this.props.dateTime)} clickedElement={this.props.clickedElement}/>
                 </TabPanel>
             </Tabs>
         )
@@ -28,4 +28,4 @@ class DashboardTabPage extends React.Component {
     }
 }
 
-export default DashboardTabPage;
+export default DashboardTab;

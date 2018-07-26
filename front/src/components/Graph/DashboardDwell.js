@@ -1,7 +1,7 @@
 import React from 'react'
 import 'whatwg-fetch'
-import DwellBarChart from "./DwellBarChart";
-import DwellPieChart from "./DwellPieChart";
+import DashboardDwellBar from "./DashboardDwellBar";
+import DashboardDwellPie from "./DashboardDwellPie";
 
 const displayStyle = {
     fontSize:'16px',
@@ -16,7 +16,7 @@ const displayStyle = {
     fontFamily: 'Tahoma, Verdana, Segoe, sans-serif'
 };
 
-class DwellChart extends React.Component{
+class DashboardDwell extends React.Component{
 
     constructor(props){
         super(props);
@@ -94,14 +94,14 @@ class DwellChart extends React.Component{
 
     loadDwellChart(){
         if(!this.state.pie){
-            return <div><DwellBarChart data={this.state.data} changeToPieChart={this.changeToPieChart} /></div>
+            return <div><DashboardDwellBar data={this.state.data} changeToPieChart={this.changeToPieChart} /></div>
         }
         else{
             return (<div>
                 <div className="input">
                     <input type="text" style={displayStyle} value={"Hourly Statistics of Dwelling Time at: "+ this.state.hour + ":00"} readOnly />
                 </div>
-                <DwellPieChart data={this.state.data} hour={this.state.hour} changeToPieChart={this.changeToPieChart}/>
+                <DashboardDwellPie data={this.state.data} hour={this.state.hour} changeToPieChart={this.changeToPieChart}/>
             </div>)
         }
     }
@@ -112,4 +112,4 @@ class DwellChart extends React.Component{
     }
 }
 
-export default DwellChart;
+export default DashboardDwell;

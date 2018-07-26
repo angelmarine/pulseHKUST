@@ -1,6 +1,6 @@
 import React from "react";
 import { withFauxDOM } from 'react-faux-dom';
-import './styles/streamgraph.css'
+import '../../styles/streamgraph.css'
 const d3 = require('d3');
 const R = require('ramda');
 

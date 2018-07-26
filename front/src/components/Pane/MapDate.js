@@ -1,16 +1,14 @@
-import './styles/input-moment.css'
+import '../../styles/input-moment.css'
 import { push as Menu } from 'react-burger-menu'
 import React from 'react'
-import {displayStyle, paneStyle} from './styles/DatePickerPaneStyle.js'
+import {datePickerDisplay, datePickerPane} from '../../styles/style.js'
 import InputMoment from 'input-moment'
-import moment from 'moment'
-import image from './img/select-datetime.svg'
+import image from '../../img/select-datetime.svg'
 
-class ChordDatePickerPane extends React.Component {
+class MapDate extends React.Component {
 
     constructor(props){
         super(props);
-
         // for internal use
         this.setDateTime = this.setDateTime.bind(this);
         this.setDatePickerPaneActive = this.setDatePickerPaneActive.bind(this);
@@ -29,7 +27,6 @@ class ChordDatePickerPane extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            dateTime: nextProps.dateTime,
             isDatePickerPaneActive: nextProps.isDatePickerPaneActive
         });
     }
@@ -62,7 +59,7 @@ class ChordDatePickerPane extends React.Component {
             <Menu right
                   noOverlay
                   customBurgerIcon={<img src={image} alt="Select Date / Time"/>}
-                  styles={paneStyle}
+                  styles={datePickerPane}
                   onStateChange={this.onStateChange}
                   isOpen={this.state.isDatePickerPaneActive}
                   width={430}
@@ -71,12 +68,12 @@ class ChordDatePickerPane extends React.Component {
                 <div className="app">
                     <form>
                         <div className="input">
-                            <input type="text" style={displayStyle} value={this.props.dateTime.format('Do MMMM YYYY, HH:mm')} readOnly />
+                            <input type="text" style={datePickerDisplay} value={this.props.dateTime.format('Do MMMM YYYY, HH:mm')} readOnly />
                         </div>
                         <InputMoment
-                            moment={moment(this.props.dateTime)}
+                            moment={this.props.dateTime}
                             onChange={this.handleChange}
-                            minStep={60}
+                            minStep={10}
                             onSave={this.handleSave}
                         />
                     </form>
@@ -86,4 +83,4 @@ class ChordDatePickerPane extends React.Component {
     }
 }
 
-export default ChordDatePickerPane;
+export default MapDate;

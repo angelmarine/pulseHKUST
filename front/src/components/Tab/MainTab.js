@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs'
-import MainPageTabOne from "./MainPageTabOne"
-import MainPageTabTwo from "./MainPageTabTwo"
-import MainPageTabThree from "./MainPageTabThree";
+import MapViewTab from "./MapViewTab"
+import ThemeriverTab from "./ThemeriverTab"
+import MovementTab from "./MovementTab";
 
-class MainPageTab extends Component {
+class MainTab extends Component {
 
     render() {
         return (
@@ -18,17 +18,17 @@ class MainPageTab extends Component {
                     <Tab tabFor="tabThree" style={{fontSize:'20px', fontFamily: 'Tahoma, Verdana, Segoe, sans-serif'}}> Movement Flow </Tab>
                 </TabList>
                 <TabPanel tabId="tabOne">
-                    <MainPageTabOne/>
+                    <MapViewTab/>
                 </TabPanel>
                 <TabPanel tabId="tabTwo">
-                    <MainPageTabTwo/>
+                    <ThemeriverTab/>
                 </TabPanel>
                 <TabPanel tabId="tabThree">
-                    <MainPageTabThree/>
+                    <MovementTab/>
                 </TabPanel>
             </Tabs>
         );
     }
 }
 
-export default MainPageTab;
+export default MainTab;

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import './styles/App.css'
+import '../../styles/app.css'
 import { Cell, PieChart, Pie, Tooltip} from 'recharts';
 const R = require('ramda');
 
 
 const COLORS = ['#0088FE', '#FF8042', '#FFBB28','#00C49F', '#8cad88'];
 
-class DwellPieChart extends Component {
+class DashboardDwellPie extends Component {
 
     constructor(props){
         super(props);
@@ -53,4 +53,4 @@ class DwellPieChart extends Component {
     }
 }
 
-export default DwellPieChart;
+export default DashboardDwellPie;

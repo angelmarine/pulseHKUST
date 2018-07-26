@@ -1,10 +1,10 @@
 import React from 'react';
 import StreamGraph from './StreamGraph';
-import Legend from './Legend';
+import StreamLegend from './StreamLegend';
 import 'whatwg-fetch'
 import moment from "moment/moment";
 
-class ThemeRiver extends React.Component{
+class Themeriver extends React.Component{
 
     constructor(props){
         super(props);
@@ -101,7 +101,7 @@ class ThemeRiver extends React.Component{
                     startDate={moment(this.state.startDate)}
                     endDate={moment(this.state.endDate)}
                     onChange={this.dataChangeHandler} />
-                <Legend data={this.state.data} onChange={this.dataChangeHandler}/>
+                <StreamLegend data={this.state.data} onChange={this.dataChangeHandler}/>
                 </div>
     }
 
@@ -114,5 +114,5 @@ class ThemeRiver extends React.Component{
     }
 }
 
-export default ThemeRiver;
+export default Themeriver;
 

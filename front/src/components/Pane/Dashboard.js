@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
-import DashboardTabPage from "./DashboardTabPage";
+import DashboardTab from "../Tab/DashboardTab";
 import moment from 'moment';
 
 const abbrFor = {
@@ -15,7 +15,7 @@ const abbrFor = {
     hall:'Student Hall'
 };
 
-class DashboardPane extends React.Component {
+class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,7 +55,7 @@ class DashboardPane extends React.Component {
                     // triggered on "<" on left top click or on outside click
                     this.props.onClose();
                 }}>
-                <DashboardTabPage
+                <DashboardTab
                     clickedElement = {this.state.clickedElement}
                     dateTime = {moment(this.state.dateTime)}/>
             </SlidingPane>
@@ -63,4 +63,4 @@ class DashboardPane extends React.Component {
     }
 }
 
-export default DashboardPane;
+export default Dashboard;

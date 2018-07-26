@@ -1,14 +1,14 @@
 import React from 'react'
-import ChordDatePickerPane from "./ChordDatePickerPane";
+import MovementDate from "../Pane/MovementDate";
 import moment from "moment/moment";
-import MovementChord from './MovementChord';
-import guide from './img/guide-round.svg';
+import MovementChord from '../Graph/MovementChord';
+import guide from '../../img/guide-round.svg';
 
-class MainPageTabThree extends React.Component{
+class MovementTab extends React.Component{
 
     constructor(props){
         super(props);
-        // used in DateRangePane component
+        // used in ThemeriverDate component
         this.floorDateTime = this.floorDateTime.bind(this);
         this.setDateTime = this.setDateTime.bind(this);
         this.setDatePickerPaneActive = this.setDatePickerPaneActive.bind(this);
@@ -16,7 +16,7 @@ class MainPageTabThree extends React.Component{
             // for this + child components
             //dateTime: this.floorDateTime(moment()),
             dateTime: this.floorDateTime(moment("2018-03-09 17:00")),
-            // used in DateRangePane component
+            // used in ThemeriverDate component
             isDatePickerPaneActive: false,
         };
     }
@@ -42,7 +42,7 @@ class MainPageTabThree extends React.Component{
     render(){
         return(
             <div id='three'>
-                <ChordDatePickerPane
+                <MovementDate
                     dateTime={moment(this.state.dateTime)}
                     setDateTime = {this.setDateTime}
                     setDatePickerPaneActive = {this.setDatePickerPaneActive}
@@ -62,4 +62,4 @@ class MainPageTabThree extends React.Component{
 
     }
 }
-export default MainPageTabThree
+export default MovementTab

@@ -1,11 +1,11 @@
 import React from 'react'
 import { push as Menu } from 'react-burger-menu'
-import { paneStyle, displayStyle} from './styles/DateRangePaneStyle.js'
+import { dateRangePane, dateRangeDisplay} from '../../styles/style.js'
 import { DateRange } from 'react-date-range'
-import image from './img/select-range.svg'
+import image from '../../img/select-range.svg'
 import moment from "moment/moment";
 
-class DateRangePane extends React.Component {
+class ThemeriverDate extends React.Component {
 
     constructor(props){
         super(props);
@@ -52,7 +52,7 @@ class DateRangePane extends React.Component {
             <Menu right
                   noOverlay
                   customBurgerIcon={<img src={image} alt="Select Date / Time"/>}
-                  styles={paneStyle}
+                  styles={dateRangePane}
                   onStateChange={this.onStateChange}
                   isOpen={this.state.isDateRangePaneActive}
                   width={650}
@@ -63,8 +63,8 @@ class DateRangePane extends React.Component {
                 <div>
                     <form>
                         <div className="input">
-                            <input type="text" style={displayStyle} value={this.props.startDate.format('Do MMMM YYYY')} readOnly />
-                            <input type="text" style={displayStyle} value={this.props.endDate.format('Do MMMM YYYY')} readOnly />
+                            <input type="text" style={dateRangeDisplay} value={this.props.startDate.format('Do MMMM YYYY')} readOnly />
+                            <input type="text" style={dateRangeDisplay} value={this.props.endDate.format('Do MMMM YYYY')} readOnly />
                         </div>
                         <DateRange
                             date={moment(this.props.endDate)}
@@ -122,4 +122,4 @@ class DateRangePane extends React.Component {
     }
 }
 
-export default DateRangePane;
+export default ThemeriverDate;

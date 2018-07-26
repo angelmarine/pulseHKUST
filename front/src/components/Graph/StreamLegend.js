@@ -1,5 +1,5 @@
 import React from "react";
-import './styles/custom-checkbox.css'
+import '../../styles/custom-checkbox.css'
 const R = require('ramda');
 
 const legendStyle = {
@@ -18,7 +18,7 @@ const abbrFor = {
     hall:'Student Hall'
 };
 
-class Legend extends React.Component {
+class StreamLegend extends React.Component {
 
     constructor(props) {
         super(props);
@@ -70,4 +70,4 @@ class Legend extends React.Component {
     }
 }
 
-export default Legend;
+export default StreamLegend;

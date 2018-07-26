@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import './styles/App.css'
+import '../../styles/app.css'
 import {BarChart, CartesianGrid, XAxis, YAxis, Tooltip,Bar } from 'recharts';
 import 'whatwg-fetch'
 
-class CountBarChart extends Component {
+class DashboardCountBar extends Component {
 
     constructor(props){
         super(props);
@@ -87,4 +87,4 @@ class CountBarChart extends Component {
     }
 }
 
-export default CountBarChart;
+export default DashboardCountBar;
